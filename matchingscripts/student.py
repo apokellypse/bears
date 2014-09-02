@@ -20,8 +20,9 @@ class Student(object):
 		sport: favorite sports
 		music: favorite genre
 		personality: things like impulsiveness, organization, etc.
-		preference:
-		choice:
+		preference: what qualities the student values or wants most in a mentee/mentor
+		tshirt: tshirt size
+		request: requested partners
 		"""
 
 	def __init__(self, name="NA", 
@@ -39,7 +40,8 @@ class Student(object):
 		music='NA', 
 		personality='NA', 
 		preference='NA', 
-		choice='NA'):
+		tshirt='NA',
+		request='NA'):
 
 		self.name = name
 		self.netid = netid
@@ -56,7 +58,8 @@ class Student(object):
 		self.music = music
 		self.personality = personality
 		self.preference = preference
-		self.choice = choice
+		self.tshirt = tshirt
+		self.request = request
 
 		# assert 
 		# add asserts later
