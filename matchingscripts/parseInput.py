@@ -3,6 +3,12 @@ date: August 31, 2014
 purpose: BEARS parsing script
 goal: take the data from the XML file from Cornell Qualtrics and separate into Python objects."""
 
+"""
+CONCERNS:
+1. IF THE STUDENT PICKED MORE THAN ONE MAJOR, ONLY THE FIRST ONE WILL BE DISPLAYED
+3. use indicies to save line space. I want it around 250 lines.
+"""
+
 from student import *
 from bs4 import BeautifulSoup
 import re
@@ -91,7 +97,11 @@ for chicken in range(len(chicken_noodle_soup)):
 	major_counter = 0
 	cals_majors = ['agsci', 'anisci', 'aem', 'atsci', 'bioeng', 'biosci', 'biosoc', 'btry', 'comm', 'devsoc', 'ent', 'enveng', 'envsci', 'foodsci', 'infosci', 'indstu', 'intag', 'landarch', 'nutsci', 'plantsci', 'sciear', 'viti']
 	aap_majors = ['arch', 'fineart', 'urb']
-	as_majors = ['afistu', 'amstu', 'anthr', 'arch', 'asistu', 'astro', 'biosci', 'biosoc', 'chembio', 'china', 'class', 'complit', 'cs', 'econ', 'eng', 'em', 'fren', 'gestu', 'gov', 'hist', 'histart', 'infosci', 'ital', 'ling', 'math', 'mus', 'eaststu', 'perf' 'phil', 'phys', 'psych', 'romstu', 'scitech', 'sciear', 'soc', 'stat']
+	as_majors = ['africana', 'amurica', 'anthr', 'archae', 'asian', 'astro', 'biosci', 'biosoc', 'chembio', 'china', 'class', 'complit', 'cs', 'econ', 'eng', 'fem', 'french', 'german', 'gov', 'hist', 'histart', 'infosci', 'ital', 'ling', 'math', 'music', 'eaststu', 'perf', 'phil', 'phys', 'psych', 'relistu', 'romance', 'scitech', 'sciear', 'soc', 'stat']
+	eng_majors = ['bioeng', 'cheme', 'civeng', 'cs', 'ece', 'engphy', 'enveng', 'indmaj', 'infosci', 'matsci', 'meche', 'orie', 'sciear']
+	# hot_majors = ['hotel']
+	hum_majors = ['biosoc', 'desenv', 'fash', 'fiber', 'globheal', 'humbio', 'humdev', 'nutsci', 'polana']
+	# ilr_majors = ['ilr']
 
 
 	#there are some ways to write this more concisely...I'll put those in later
@@ -104,7 +114,6 @@ for chicken in range(len(chicken_noodle_soup)):
 				break;
 			else:
 				major_counter += 1
-				# print "MAJOR COUNTER = " + str(major_counter)
 
 	elif s.school == 'AAP':
 		for onions in french_onion_soup.findAll(re.compile('(Q29_[0-9]{1})')):
@@ -123,8 +132,110 @@ for chicken in range(len(chicken_noodle_soup)):
 				break;
 			else:
 				major_counter += 1
+	elif s.school == 'ENG':
+		for noodles in french_onion_soup.findAll(re.compile('(Q31_[0-9]{1,2})')):
+			if noodles.text == "1":
+				s.major = eng_majors[major_counter]
+				major_counter = 0
+				break;
+			else: 
+				major_counter += 1
+
+	elif s.school == 'HOT':
+		s.major = 'hotel'
+
+	elif s.school == 'HUM':
+		for ramen in french_onion_soup.findAll(re.compile('(Q33_[0-9]{1})')):
+			if ramen.text == "1":
+				s.major = hum_majors[major_counter]
+				major_counter = 0
+				break;
+			else:
+				major_counter += 1
+	elif s.school == 'ILR':
+		s.major = 'ilr'
+	else:
+		print 'SOMETHING WRONG HAPPENED HERE'
 
 	print "MAJOR: " + s.major
+
+	#ETHNICITY
+	p = french_onion_soup.find('Q6')
+	eth = ""
+	if p.text == "1":
+		eth = 'White'
+	elif p.text == "11":
+		eth = 'Middle Eastern'
+	elif p.text == "2":
+		eth = 'Black/African-American'
+	elif p.text == "3":
+		eth = 'Latino/Hispanic'
+	elif p.text == "4":
+		eth = 'East Asian'
+	elif p.text == "5":
+		eth = 'South Asian'
+	elif p.text == "13":
+		eth = 'Pacific Islander'
+	elif p.text == "6":
+		eth = 'Native American'
+	elif p.text == "7":
+		eth = 'Other'
+	s.ethnicity = eth
+
+	pt = french_onion_soup.find('Q6_TEXT')
+	if pt.text != "":
+		s.ethnicity = pt.text;
+
+	print 'ETHNICITY: ' + s.ethnicity
+
+	#HOMETOWN
+	h = french_onion_soup.find('Q17')
+	s.hometown = h.text
+
+	print 'HOMETOWN: ' + s.hometown
+
+	#RELIGION
+	r = french_onion_soup.find('Q12')
+	rel = ""
+	if r.text == "1":
+		rel = 'Christian'
+	elif r.text == "2":
+		rel = 'Jewish'
+	elif r.text == "3":
+		rel = 'Muslim'
+	elif r.text == "4":
+		rel = 'Hindu'
+	elif r.text == "5":
+		rel = 'Buddhist'
+	elif r.text == "6":
+		rel = 'Atheist/Agnostic'
+	elif r.text == "7":
+		rel = 'Other'
+	s.religion = rel
+
+	rt = french_onion_soup.find('Q12_TEXT')
+	if rt.text != '':
+		s.religion = rt.text
+
+	print 'RELIGION: ' + s.religion
+
+	#CAREER INTERESTS
+	career_options = ['broadcasting', 'journalism', 'publishing', 'architecture', 'culinaryart', 'fineart', 'photo', 'performingart', 'music','design', 'marketing', 'pr', 'finance', 'accounting', 'entre', 'mgmtcounsel', 'hr', 'realestate', 'hotel', 'fashion', 'stat/math', 'sports', 'teachingk12', 'uni', 'administration' 'research', 'coaching', 'meche', 'ece', 'cive', 'cheme', 'aeroe', 'manufac', 'infosci', 'cs', 'proddes', 'envsci', 'geo', 'energ', 'forest', 'parks', 'nurse', 'pharm', 'diet', 'doctor', 'labresearch', 'vet' 'pubheal', 'emecare', 'langtrans', 'forserv', 'internongov', 'intertrade', 'attorney', 'judge', 'pubserv', 'corporate', 'legal', 'socialwork', 'psych/couns', 'clergy', 'nonprofit', 'gov/pol', 'natsec', 'other']
+
+	career_counter = 0
+	for broth in french_onion_soup.findAll(re.compile('(Q16_[0-9]{1,2})')):
+		if broth.text == '1':
+			print 'CAREER: ' + career_options[int(career_counter)]
+		career_counter += 1
+	# s.career = career_options[int(c.text)]
+
+
+
+
+
+
+
+
 
 # print names
 
