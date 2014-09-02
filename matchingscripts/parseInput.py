@@ -5,7 +5,6 @@ goal: take the data from the XML file from Cornell Qualtrics and separate into P
 
 """
 CONCERNS:
-1. IF THE STUDENT PICKED MORE THAN ONE MAJOR, ONLY THE FIRST ONE WILL BE DISPLAYED
 3. use indicies to save line space. I want it around 250 lines.
 """
 
@@ -15,7 +14,6 @@ import re
 
 soup = BeautifulSoup(open("input.xml"), "xml")
 chicken_noodle_soup = []
-LIST_OF_STUDENTS = []
 
 """Separating Responses for Sanity of Mind"""
 for res in soup.findAll('Response'):
@@ -23,8 +21,6 @@ for res in soup.findAll('Response'):
 
 """Takes each response and generates a student"""
 for chicken in range(len(chicken_noodle_soup)):
-	# print chicken_noodle_soup[chicken]
-	# print type(chicken_noodle_soup[chicken])
 	s = Student()
 	french_onion_soup = BeautifulSoup(str(chicken_noodle_soup[chicken]), "xml")
 
@@ -54,7 +50,6 @@ for chicken in range(len(chicken_noodle_soup)):
 	print "GENDER: " + s.gender
 
 	#YEAR
-	#I WISH PYTHON HAD SWITCH STATEMENTS
 	y = french_onion_soup.find('Q2')
 	year_name = ""
 	if (y.text == "1"):
@@ -82,12 +77,10 @@ for chicken in range(len(chicken_noodle_soup)):
 		college_name = 'ENG'
 	elif (c.text == "5"):
 		college_name = 'HOT'
-		# LIST_OF_STUDENTS[counter].major = 'hot'
 	elif (c.text == "6"):
 		college_name = 'HUM'
 	elif (c.text == "7"):
 		college_name = 'ILR'
-		# LIST_OF_STUDENTS[counter].major = 'ilr'
 	else:
 		print "you done messed up"
 	s.school = college_name
@@ -95,101 +88,62 @@ for chicken in range(len(chicken_noodle_soup)):
 
 	#MAJOR
 	major_counter = 0
-	cals_majors = ['agsci', 'anisci', 'aem', 'atsci', 'bioeng', 'biosci', 'biosoc', 'btry', 'comm', 'devsoc', 'ent', 'enveng', 'envsci', 'foodsci', 'infosci', 'indstu', 'intag', 'landarch', 'nutsci', 'plantsci', 'sciear', 'viti']
+	cals_majors = ['agsci', 'anisci', 'aem', 'atsci', 'bioeng', 
+	'biosci', 'biosoc', 'btry', 'comm', 'devsoc', 
+	'ent', 'enveng', 'envsci', 'foodsci', 'infosci', 
+	'indstu', 'intag', 'landarch', 'nutsci', 'plantsci', 
+	'sciear', 'viti']
 	aap_majors = ['arch', 'fineart', 'urb']
-	as_majors = ['africana', 'amurica', 'anthr', 'archae', 'asian', 'astro', 'biosci', 'biosoc', 'chembio', 'china', 'class', 'complit', 'cs', 'econ', 'eng', 'fem', 'french', 'german', 'gov', 'hist', 'histart', 'infosci', 'ital', 'ling', 'math', 'music', 'eaststu', 'perf', 'phil', 'phys', 'psych', 'relistu', 'romance', 'scitech', 'sciear', 'soc', 'stat']
-	eng_majors = ['bioeng', 'cheme', 'civeng', 'cs', 'ece', 'engphy', 'enveng', 'indmaj', 'infosci', 'matsci', 'meche', 'orie', 'sciear']
-	# hot_majors = ['hotel']
-	hum_majors = ['biosoc', 'desenv', 'fash', 'fiber', 'globheal', 'humbio', 'humdev', 'nutsci', 'polana']
-	# ilr_majors = ['ilr']
+	as_majors = ['africana', 'amurica', 'anthr', 'archae', 'asian', 
+	'astro', 'biosci', 'biosoc', 'chembio', 'china', 
+	'class', 'complit', 'cs', 'econ', 'eng', 
+	'fem', 'french', 'german', 'gov', 'hist', 
+	'histart', 'infosci', 'ital', 'ling', 'math', 
+	'music', 'eaststu', 'perf', 'phil', 'phys', 
+	'psych', 'relistu', 'romance', 'scitech', 'sciear', 
+	'soc', 'stat']
+	eng_majors = ['bioeng', 'cheme', 'civeng', 'cs', 'ece', 
+	'engphy', 'enveng', 'indmaj', 'infosci', 'matsci', 
+	'meche', 'orie', 'sciear']
+	hum_majors = ['biosoc', 'desenv', 'fash', 'fiber', 'globheal', 
+	'humbio', 'humdev', 'nutsci', 'polana']
 
-
-	def determine_major(string_regex, majors_list):
-	#there are some ways to write this more concisely...I'll put those in later
+	attribute = 'NA'
+	def regexHandler(string_regex, majors_list):
+		global attribute
 		assert type(string_regex) == str
 		assert type(majors_list) == list
-		major_counter = 0
+		cloves_of_garlic = 0
 		for onions in french_onion_soup.findAll(re.compile(string_regex)):
 			if onions.text == "1":
-				if s.major == 'NA':
-					s.major = [majors_list[major_counter]] #makes it a list
+				if attribute == 'NA':
+					attribute = [majors_list[cloves_of_garlic]] #makes it a list
+					assert type(attribute) == list
+					# print majors_list[cloves_of_garlic]
+					# print 'it was previously NA'
 				else:
-					s.major.append(majors_list[major_counter])
-			major_counter += 1
-		print "MAJOR: " + str(s.major)
-
+					attribute.append(majors_list[cloves_of_garlic])
+					# print majors_list[cloves_of_garlic]
+			cloves_of_garlic += 1
+			
 	if s.school == "CALS":
-		determine_major('(Q5_[0-9]{1,2})', cals_majors)
+		regexHandler('(Q5_[0-9]{1,2})', cals_majors)
 	elif s.school == 'AAP':
-		determine_major('(Q29_[0-9]{1})', aap_majors)
+		regexHandler('(Q29_[0-9]{1})', aap_majors)
 	elif s.school == 'AS':
-		determine_major('(Q30_[0-9]{1,2})', as_majors)
+		regexHandler('(Q30_[0-9]{1,2})', as_majors)
 	elif s.school == 'ENG':
-		determine_major('(Q31_[0-9]{1,2})', eng_majors)
+		regexHandler('(Q31_[0-9]{1,2})', eng_majors)
 	elif s.school == 'HOT':
 		s.major = 'hotel'
 	elif s.school == 'HUM':
-		determine_major('(Q33_[0-9]{1})', hum_majors)	
+		regexHandler('(Q33_[0-9]{1})', hum_majors)	
 	elif s.school == 'ILR':
 		s.school == 'ilr'
 	else:
 		print 'you are in trouble'
-
-
-	"""if s.school == 'CALS':
-		major_counter = 0
-		for q in french_onion_soup.findAll(re.compile('(Q5_[0-9]{1,2})')):
-			if q.text == "1":
-				if s.major == 'NA':
-					s.major = cals_majors[major_counter]
-				else:
-					s.major.append(cals_majors[major_counter])
-
-			major_counter += 1
-
-	elif s.school == 'AAP':
-		for onions in french_onion_soup.findAll(re.compile('(Q29_[0-9]{1})')):
-			if onions.text == "1":
-				s.major = aap_majors[major_counter]
-				major_counter = 0
-				break;
-			else:
-				major_counter += 1
-
-	elif s.school == 'AS':
-		for french in french_onion_soup.findAll(re.compile('(Q30_[0-9]{1,2})')):
-			if french.text == "1":
-				s.major = as_majors[major_counter]
-				major_counter = 0
-				break;
-			else:
-				major_counter += 1
-	elif s.school == 'ENG':
-		for noodles in french_onion_soup.findAll(re.compile('(Q31_[0-9]{1,2})')):
-			if noodles.text == "1":
-				s.major = eng_majors[major_counter]
-				major_counter = 0
-				break;
-			else: 
-				major_counter += 1
-
-	elif s.school == 'HOT':
-		s.major = 'hotel'
-
-	elif s.school == 'HUM':
-		for ramen in french_onion_soup.findAll(re.compile('(Q33_[0-9]{1})')):
-			if ramen.text == "1":
-				s.major = hum_majors[major_counter]
-				major_counter = 0
-				break;
-			else:
-				major_counter += 1
-	elif s.school == 'ILR':
-		s.major = 'ilr'
-	else:
-		print 'SOMETHING WRONG HAPPENED HERE'
-
-	print "MAJOR: " + s.major"""
+	s.major = attribute
+	print 'MAJOR: ' + str(s.major)
 
 	#ETHNICITY
 	p = french_onion_soup.find('Q6')
@@ -266,47 +220,23 @@ for chicken in range(len(chicken_noodle_soup)):
 	'pubserv', 'corporate', 'legal', 'socialwork', 'psych/couns', 
 	'clergy', 'nonprofit', 'gov/pol', 'natsec', 'other']
 
-	career_counter = 0
-	for broth in french_onion_soup.findAll(re.compile('(Q16_[0-9]{1,2})')):
-		if broth.text == '1':
-			# print career_counter
-			# print len(career_options)
-			if s.career == "NA": 
-				s.career = [career_options[career_counter]]
-			else:
-				s.career.append(career_options[career_counter])
-		career_counter += 1
+	# career_counter = 0
+	# for broth in french_onion_soup.findAll(re.compile('(Q16_[0-9]{1,2})')):
+	# 	if broth.text == '1':
+	# 		# print career_counter
+	# 		# print len(career_options)
+	# 		if s.career == "NA": 
+	# 			s.career = [career_options[career_counter]]
+	# 		else:
+	# 			s.career.append(career_options[career_counter])
+	# 	career_counter += 1
+	regexHandler('(Q16_[0-9]{1,2})', career_options)
 	print 'CAREER: ' + str(s.career)
 	# s.career = career_options[int(c.text)]
 
-
-
-
-
-
-
-
-
-# print names
-
-
-#This will make a list of names:
-# names = []
-# netid = []
-# birthday = []
-# role = []
-# gender = []
-# year = []
-# school = []
-# major = []
-# ethnicity = []
-# hometown = []
-# religion = []
-# career = []
-# club = []
-# sport = []
-# music = []
-# personality = []
-# preference = []
-# choice = []
-
+	#EXTRACURRICULAR INTERESTS
+	club_options = ['greek', 'polt', 'env', 'dance', 'commserv', 
+	'minority', 'proffrat', 'career', 'athletic', 'cultural', 
+	'socialchange', 'other']
+	club_counter = 0
+	# for salt in french_onion_soup.findAll(re.compile('')):
