@@ -104,16 +104,48 @@ for chicken in range(len(chicken_noodle_soup)):
 	# ilr_majors = ['ilr']
 
 
+	def determine_major(string_regex, majors_list):
 	#there are some ways to write this more concisely...I'll put those in later
-	if s.school == 'CALS':
+		assert type(string_regex) == str
+		assert type(majors_list) == list
+		major_counter = 0
+		for onions in french_onion_soup.findAll(re.compile(string_regex)):
+			if onions.text == "1":
+				if s.major == 'NA':
+					s.major = [majors_list[major_counter]] #makes it a list
+				else:
+					s.major.append(majors_list[major_counter])
+			major_counter += 1
+		print "MAJOR: " + str(s.major)
+
+	if s.school == "CALS":
+		determine_major('(Q5_[0-9]{1,2})', cals_majors)
+	elif s.school == 'AAP':
+		determine_major('(Q29_[0-9]{1})', aap_majors)
+	elif s.school == 'AS':
+		determine_major('(Q30_[0-9]{1,2})', as_majors)
+	elif s.school == 'ENG':
+		determine_major('(Q31_[0-9]{1,2})', eng_majors)
+	elif s.school == 'HOT':
+		s.major = 'hotel'
+	elif s.school == 'HUM':
+		determine_major('(Q33_[0-9]{1})', hum_majors)	
+	elif s.school == 'ILR':
+		s.school == 'ilr'
+	else:
+		print 'you are in trouble'
+
+
+	"""if s.school == 'CALS':
+		major_counter = 0
 		for q in french_onion_soup.findAll(re.compile('(Q5_[0-9]{1,2})')):
 			if q.text == "1":
-				# print 'FOUND IT'
-				s.major = cals_majors[major_counter]
-				major_counter = 0
-				break;
-			else:
-				major_counter += 1
+				if s.major == 'NA':
+					s.major = cals_majors[major_counter]
+				else:
+					s.major.append(cals_majors[major_counter])
+
+			major_counter += 1
 
 	elif s.school == 'AAP':
 		for onions in french_onion_soup.findAll(re.compile('(Q29_[0-9]{1})')):
@@ -157,7 +189,7 @@ for chicken in range(len(chicken_noodle_soup)):
 	else:
 		print 'SOMETHING WRONG HAPPENED HERE'
 
-	print "MAJOR: " + s.major
+	print "MAJOR: " + s.major"""
 
 	#ETHNICITY
 	p = french_onion_soup.find('Q6')
@@ -220,13 +252,31 @@ for chicken in range(len(chicken_noodle_soup)):
 	print 'RELIGION: ' + s.religion
 
 	#CAREER INTERESTS
-	career_options = ['broadcasting', 'journalism', 'publishing', 'architecture', 'culinaryart', 'fineart', 'photo', 'performingart', 'music','design', 'marketing', 'pr', 'finance', 'accounting', 'entre', 'mgmtcounsel', 'hr', 'realestate', 'hotel', 'fashion', 'stat/math', 'sports', 'teachingk12', 'uni', 'administration' 'research', 'coaching', 'meche', 'ece', 'cive', 'cheme', 'aeroe', 'manufac', 'infosci', 'cs', 'proddes', 'envsci', 'geo', 'energ', 'forest', 'parks', 'nurse', 'pharm', 'diet', 'doctor', 'labresearch', 'vet' 'pubheal', 'emecare', 'langtrans', 'forserv', 'internongov', 'intertrade', 'attorney', 'judge', 'pubserv', 'corporate', 'legal', 'socialwork', 'psych/couns', 'clergy', 'nonprofit', 'gov/pol', 'natsec', 'other']
+	career_options = ['broadcasting', 'journalism', 'publishing', 'architecture', 'culinaryart', 
+	'fineart', 'photography', 'performingarts', 'music','design', 
+	'marketing/adv', 'pr', 'finance', 'accounting', 'entre', 
+	'mgmtcounsel', 'hr', 'realestate', 'hotelmgmt', 'fashion', 
+	'stat/math', 'sports', 'teachingk12', 'university/coll', 'administration', 
+	'research', 'coaching', 'meche', 'ece', 'cive', 
+	'cheme', 'aeroe', 'manufac', 'infosci', 'cs', 
+	'productdes', 'envsci', 'geo', 'energy', 'forestry/wild', 
+	'parks/rec', 'nurse', 'pharm', 'diet', 'doctor', 
+	'labresearch', 'vet', 'pubheal', 'emecare', 'langtrans', 
+	'foreignserv', 'internongov', 'intertrade', 'attorney', 'judge', 
+	'pubserv', 'corporate', 'legal', 'socialwork', 'psych/couns', 
+	'clergy', 'nonprofit', 'gov/pol', 'natsec', 'other']
 
 	career_counter = 0
 	for broth in french_onion_soup.findAll(re.compile('(Q16_[0-9]{1,2})')):
 		if broth.text == '1':
-			print 'CAREER: ' + career_options[int(career_counter)]
+			# print career_counter
+			# print len(career_options)
+			if s.career == "NA": 
+				s.career = [career_options[career_counter]]
+			else:
+				s.career.append(career_options[career_counter])
 		career_counter += 1
+	print 'CAREER: ' + str(s.career)
 	# s.career = career_options[int(c.text)]
 
 

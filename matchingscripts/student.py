@@ -47,16 +47,16 @@ class Student(object):
 		self.role = role
 		self.school = school
 		self.major = major
-		self.eth = ethnicity
+		self.ethnicity = ethnicity
 		self.home = hometown
-		self.rel = religion
-		self.car = career
+		self.religion = religion
+		self.career = career
 		self.club = club
 		self.sport = sport
 		self.music = music
-		self.per = personality
-		self.pref = preference
-		self.cho = choice
+		self.personality = personality
+		self.preference = preference
+		self.choice = choice
 
 		# assert 
 		# add asserts later
