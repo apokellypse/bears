@@ -9,6 +9,8 @@ h5{ font-size: 18px; letter-spacing: 3px; margin-right: -3px; }
 
 a{ color: #454545; }
 a:hover{ color: #454545; }
+a.alternate { color: #000; }
+a.alternate:hover{ color: #636363; }
 img{ -webkit-backface-visibility: hidden; }
 ul{ margin: 0px; }
 input{ -webkit-appearance: none; }
@@ -67,6 +69,7 @@ p{ font-size: 14px; }
 p:last-child{ margin-bottom: 0px; }
 
 .text-white{ color: #fff; border-color: #fff; }
+.text-red{ color: red; border-color: red; }
 .underline{ display: inline-block; border-bottom: 3px solid; padding-bottom: 3px; }
 h1.underline{ letter-spacing: 3px; margin-right: -3px; }
 .page-title{ display: inline-block; border-bottom: 3px solid; padding-bottom: 7px; margin-bottom: 44px; }
