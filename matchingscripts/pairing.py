@@ -3,16 +3,18 @@ date: September 7th, 2014
 purpose: BEARS paring script
 goal: sort students and mentors into lists, have them rate each mentor (give a score), then apply the Gale-Shapely algorithm, which is known to produce excellent results."""
 
+tracker = []
+
 def matchmaker(bear, cub):
 	assert type(bear) == list
-	assert type(cub) == list)
+	assert type(cub) == list
 
 #this gives the cubs "proposal preference"
 	for c in cub:
 		for b in bear:
 			#scoring based on preferences
 			score = 0
-			if b.major == c.major && b.college == c.college:
+			if b.major == c.major and b.college == c.college:
 				score += c.preference.index('college + major')
 			if b.ethnicity == c.ethnicity:
 				score += c.preference.index('ethnicity')
@@ -41,6 +43,7 @@ def matchmaker(bear, cub):
 			where = temp.index(highest)
 			c.rankings.append(where)
 			temp[where] = -1
+		tracker.append(False)
 
 	for b in bear:
 		temp = b.scores #don't want to destroy anything
@@ -52,35 +55,50 @@ def matchmaker(bear, cub):
 
 
 	#now we start proposing
+	while tracker.count(False) > 0: #while there are unmatched cubs
+		for c in range(len(cub)): #iterating through students' indices
+			if cub[c].partnerID == -1:
+				choice = 0;
+				while cub[c].partnerID == -1:
+					thepick = cub[c].rankings[choice] #returns you the index of your top choice
+					if bear[thepick].partnerID == -1: #bear has no partner
+						#store IDs
+						bear[thepick].partnerID = c
+						cub[c].partnerID = thepick 
+						tracker[c] = True
+						break #get outta the while loop
 
-	for c in range(len(cub)): #iterating through students' indices
-		if cub[c].partnerID == -1:
-			choice = 0;
-			while cub[c].parterID = -1:
-				thepick = cub[c].rankings[choice] #returns you the index of your top choice
-				if bear[thepick].partnerID == -1: #bear has no partner
-					#store IDs
-					bear[thepick].partnerID = c
-					cub[c].partnerID = thepick 
-					break #get outta the while loop
-
-				else: #bear has a partner
-					if bear[thepick].happiness < bear[thepick].scores[cub[c].partnerID]: #if bear would be happier switching
+					#if bear already has a partner
+					elif bear[thepick].scores[bear[thepick].partnerID] < bear[thepick].scores[cub[c]]: #if bear would be happier switching
 						#abandon cub
 						cub[bear[thepick]].partnerID = -1
 						cub[bear[thepick]].happiness = -1
+						tracker[c] = False
 
 						#re-pair
 
 						#store IDs
 						bear[thepick].partnerID = c
 						cub[c].partnerID = thepick 
+						tracker[c] = True
 						break
 					else: #bear is satisfied, but cub still alone
 						choice += 1
 
+
+
 	#calculate happiness
-	
+	happiness = 0
+	avg = 0
+	for c in cub:
+		happiness += c.scores[c.partnerID]
+		avg = float(happiness) / len(cub)
+	print 'AVERAGE CUB SATISFACTION IS: ' + str(avg)
+	happiness = 0
+	for b in bear:
+		happiness += b.scores[b.partnerID]
+		avg = float(happiness) / len(bear)
+	print 'AVERAGE BEAR SATISFACTION IS: ' + str(avg)
 
 			# i = -1
 			# for t in xrange(n):

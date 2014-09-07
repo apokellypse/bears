@@ -6,4 +6,4 @@ import parseInput
 import student
 import pairing
 
-parseInput.main()
+pairing.main()
