@@ -63,7 +63,6 @@ class Student(object):
 		self.scores = [] #organized by index, the scores
 		self.rankings = [] #organized by quality, the rankings
 		self.partnerID = -1
-		self.happiness = -1
 
 		# assert 
 		# add asserts later
