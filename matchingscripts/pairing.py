@@ -4,36 +4,48 @@ purpose: BEARS paring script
 goal: sort students and mentors into lists, have them rate each mentor (give a score), then apply the Gale-Shapely algorithm, which is known to produce excellent results."""
 
 tracker = []
+blacklist = []
 
 def matchmaker(bear, cub):
 	assert type(bear) == list
 	assert type(cub) == list
 
 #this gives the cubs "proposal preference"
+	count = 0
 	for c in cub:
+		print 'Student ' + str(count)
 		for b in bear:
 			#scoring based on preferences
+			# print 'BEAR ' + b
+			# print b.preference
 			score = 0
-			if b.major == c.major and b.college == c.college:
-				score += c.preference.index('college + major')
-			if b.ethnicity == c.ethnicity:
-				score += c.preference.index('ethnicity')
-			if b.hometown == c.hometown:
-				score += c.preference.index('hometown')
-			if b.religion == c.religion:
-				score += c.preference.index('religion')
-			if b.career == c.career:
-				score += c.preference.index('career')
-			if b.club == c.club:
-				score += c.preference.index('career')
-			if b.sports == c.sports:
-				score += c.preference.index('sports')
-			if b.music == c.music:
-				score += c.preference.index('music')
-			if b.personality == c.personality:
-				score += c.preference.index('personality')
+			if 'college + major' in b.preference and 'college + major' in c.preference:
+				if b.major == c.major and b.school == c.school:
+					score += c.preference.index('college + major')
+				if b.ethnicity == c.ethnicity:
+					score += c.preference.index('ethnicity')
+				if b.hometown == c.hometown:
+					score += c.preference.index('hometown')
+				if b.religion == c.religion:
+					score += c.preference.index('religion')
+				if b.career == c.career:
+					score += c.preference.index('career')
+				if b.club == c.club:
+					score += c.preference.index('club')
+				if b.sport == c.sport:
+					score += c.preference.index('sports')
+				if b.music == c.music:
+					score += c.preference.index('music')
+				if b.personality == c.personality:
+					score += c.preference.index('personality')
+			else:
+				blacklist.append(b) #for those who didn't put prefs
+
 			c.scores.append(score) #keeps track of each bear's score, baed on index.
 			#So, bear[0] has socre c.scores[0]
+		count += 1
+
+#crashes here
 
 	#ranking
 	for c in cub:

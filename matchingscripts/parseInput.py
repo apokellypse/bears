@@ -59,8 +59,8 @@ sports_list = ['archery', 'badminton', 'baseball', 'basketball', 'bowling',
 music_list = ['alter', 'apop', 'classical', 'country', 'edm', 
 	'euro', 'hiphop', 'jazz', 'latin', 'opera', 
 	'pop', 'r&b', 'rock', 'none', 'other']
-prefs_list = ['college + major', 'ethnicity', 'hometown', 'religion', 'career interests', 
-	'club interests', 'sports', 'music', 'personality']
+prefs_list = ['college + major', 'ethnicity', 'hometown', 'religion', 'career', 
+	'club', 'sports', 'music', 'personality']
 
 """Separating Responses for Sanity of Mind"""
 for res in soup.findAll('Response'):
