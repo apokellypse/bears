@@ -5,9 +5,12 @@ goal: sort students and mentors into lists, have them rate each mentor (give a s
 
 tracker = []
 blacklist = []
+from parseInput import *
+import copy
 
 def matchmaker(bear, cub):
 	assert type(bear) == list
+	assert type(bear[0]) != int
 	assert type(cub) == list
 
 #this gives the cubs "proposal preference"
@@ -42,77 +45,109 @@ def matchmaker(bear, cub):
 				blacklist.append(b) #for those who didn't put prefs
 
 			c.scores.append(score) #keeps track of each bear's score, baed on index.
+			b.scores.append(score)
 			#So, bear[0] has socre c.scores[0]
 		count += 1
 
 #crashes here
-
+	print 'Ranking starts here'	
+	# print cub[90].name
+	# print cub[90].scores
 	#ranking
 	for c in cub:
-		temp = c.scores #don't want to destroy anything
+		# print '\n SCORE IS:' + str(c.scores)
+		temp = copy.deepcopy(c.scores) #don't want to destroy anything
+
 		while max(temp) != -1:
 			highest = max(temp)
 			where = temp.index(highest)
 			c.rankings.append(where)
 			temp[where] = -1
+			# if c == cub[90]:
+			# 	print temp
+			# 	assert c.scores == temp
 		tracker.append(False)
 
 	for b in bear:
-		temp = b.scores #don't want to destroy anything
+
+		temp = copy.deepcopy(b.scores) #don't want to destroy anything
+		# print temp
+		# import pdb;pdb.set_trace()
 		while max(temp) != -1:
 			highest = max(temp)
 			where = temp.index(highest)
 			b.rankings.append(where)
 			temp[where] = -1
-
+	# if c is an int, use it to index into cub
 
 	#now we start proposing
 	while tracker.count(False) > 0: #while there are unmatched cubs
+		print '\n TODAY WE MATCH ' + str(len(cub)) + ' CUBS WITH ' + str(len(bear)) + ' BEARS'
 		for c in range(len(cub)): #iterating through students' indices
+
+			print '\n    CURRENTLY MATCHING CUB ' + str(c)
+			assert type(cub[c] != int)
 			if cub[c].partnerID == -1:
 				choice = 0;
 				while cub[c].partnerID == -1:
 					thepick = cub[c].rankings[choice] #returns you the index of your top choice
+					print 'Attempt No. ' + str(choice) + ', CUB ' + str(c) + ' WANTS BEAR ' + str(thepick)
 					if bear[thepick].partnerID == -1: #bear has no partner
 						#store IDs
 						bear[thepick].partnerID = c
 						cub[c].partnerID = thepick 
 						tracker[c] = True
-						break #get outta the while loop
+						print 'BEAR IS CUBLESS, MATCH SUCCESSFUL'
+						# break #get outta the while loop
 
 					#if bear already has a partner
-					elif bear[thepick].scores[bear[thepick].partnerID] < bear[thepick].scores[cub[c]]: #if bear would be happier switching
+					elif bear[thepick].scores[bear[thepick].partnerID] < bear[thepick].scores[c]: #if bear would be happier switching
+						print 'BEAR ' + str(thepick) + ' ALREADY HAS A CUB, SWAP? YES'
+						#so the first part of the above statement is the score the bear gave its current cub
+						#the second part of the statement is the score the bear has given to the prospective
 						#abandon cub
-						cub[bear[thepick]].partnerID = -1
-						cub[bear[thepick]].happiness = -1
+						cub[bear[thepick].partnerID].partnerID = -1
+						#so in the above we want to departner the previous cub.
+						#we look inside the list of cubs with the current bear's partnerID
+						cub[bear[thepick].happiness].partnerID = -1
 						tracker[c] = False
 
 						#re-pair
 
 						#store IDs
 						bear[thepick].partnerID = c
-						cub[c].partnerID = thepick 
+						cub[c].partnerID = thepick
 						tracker[c] = True
-						break
+						# break
 					else: #bear is satisfied, but cub still alone
+						print 'BEAR ' + str(thepick) + ' ALREADY HAS A CUB, SWAP? NO'
 						choice += 1
+					# print str(cub[c].partnerID)
 
 
 
 	#calculate happiness
-	happiness = 0
 	avg = 0
-	for c in cub:
-		happiness += c.scores[c.partnerID]
+	for c in range(len(cub)): 
+		print type(cub)
+		print cub
+		print type(cub[0])
+		# print cub[c].scores
+		print type(cub[0]).scores
+		(cub[c]).happiness += ((cub[c]).scores[c]).partnerID #w/o parenthesis it won't work :o
+		# print c.scores[c.partnerID]
 		avg = float(happiness) / len(cub)
 	print 'AVERAGE CUB SATISFACTION IS: ' + str(avg)
-	happiness = 0
-	for b in bear:
-		happiness += b.scores[b.partnerID]
+
+	for b in range(len(bear)):
+		(bear[b]).happiness += ((bear[b]).scores[b]).partnerID
 		avg = float(happiness) / len(bear)
 	print 'AVERAGE BEAR SATISFACTION IS: ' + str(avg)
 
 			# i = -1
 			# for t in xrange(n):
 			# 	i = c.scores(bookmark, i + 1)
+
+if __name__ == '__main__':
+	matchmaker(mentors, mentees)
 

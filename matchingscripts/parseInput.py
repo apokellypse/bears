@@ -13,6 +13,7 @@ mentors = []
 mentees = []
 mentor_count = 0
 mentee_count = 0
+requested_pairs = [] #for those who requested someone specific. I assume it's mutual/they signed up together.
 
 #DATA
 major_counter = 0
@@ -68,8 +69,15 @@ for res in soup.findAll('Response'):
 
 """Takes each response and generates a student"""
 for chicken in range(len(chicken_noodle_soup)):
+	copy = True
 	s = Student()
 	french_onion_soup = BeautifulSoup(str(chicken_noodle_soup[chicken]), "xml")
+
+	#HANDLING UNFINISHED RESPONSES
+	blah = french_onion_soup.find('Finished')
+	if blah.text == '0':
+		print '\n FOUND UNFINISHED, WILL NOT RECORD \n'
+		copy = False
 
 	#NAMES
 	n = french_onion_soup.find('Q3_1_TEXT')
@@ -307,16 +315,27 @@ for chicken in range(len(chicken_noodle_soup)):
 	print 'TSHIRT SIZE: ' + tees
 
 	#PARTNER REQUESTS
-	guy1 = french_onion_soup.find('Q24_1_TEXT')
-	guy2 = french_onion_soup.find('Q24_2_TEXT')
-	s.request = [guy1.text, guy2.text]
-	print 'REQUESTED: ' + str(s.request) + '\n'
-	if str(s.request) == '': assert 3==2
+	first = french_onion_soup.find('Q24_1_TEXT')
+	second = french_onion_soup.find('Q24_2_TEXT')
+	guy1 = first.text
+	guy2 = second.text
+	s.request = [guy1, guy2]
+	
+	print 'first request: ' + str(guy1)
+	print 'second request: ' + str(guy2)
+	if str(guy1) == "" and str(guy2) == "": print 'DID NOT REQUEST ANYONE \n'
+	else: 
+		copy = False
+		requested_pairs.append(str(s.name) + ' requested ' + str(guy1) + ' and ' + str(guy2))
+		print 'REQUESTED: ' + str(s.request) + '\n'
+
 
 	#SAVE
-	if s.role == 'mentor': mentors.append(s)
-	elif s.role == 'mentee': mentees.append(s)
-	else: assert(1==2) #lol
+	if s.role == 'mentor' and copy == True: mentors.append(s)
+	elif s.role == 'mentee' and copy == True: mentees.append(s)
+	else: print 'THE PREVIOUS STUDENT WAS NOT RECORDED  \n'
+
+	print requested_pairs
 
 def getMentees():
 	return mentees
