@@ -24,23 +24,23 @@ def matchmaker(bear, cub):
 			score = 0
 			if 'college + major' in b.preference and 'college + major' in c.preference:
 				if b.major == c.major and b.school == c.school:
-					score += (9 - c.preference.index('college + major'))
+					score += (27 - 3*c.preference.index('college + major'))
 				if b.ethnicity == c.ethnicity:
-					score += (9 - c.preference.index('ethnicity'))
+					score += (27 - 3*c.preference.index('ethnicity'))
 				if b.hometown == c.hometown:
-					score += (9 - c.preference.index('hometown'))
+					score += (27 - 3*c.preference.index('hometown'))
 				if b.religion == c.religion:
-					score += (9 - c.preference.index('religion'))
+					score += (27 - 3*c.preference.index('religion'))
 				if b.career == c.career:
-					score += (9 - c.preference.index('career'))
+					score += (27 - 3*c.preference.index('career'))
 				if b.club == c.club:
-					score += (9 - c.preference.index('club'))
+					score += (27 - 3*c.preference.index('club'))
 				if b.sport == c.sport:
-					score += (9 - c.preference.index('sports'))
+					score += (27 - 3*c.preference.index('sports'))
 				if b.music == c.music:
-					score += (9 - c.preference.index('music'))
+					score += (27 - 3*c.preference.index('music'))
 				if b.personality == c.personality:
-					score += (9 - c.preference.index('personality'))
+					score += (27 - 3*c.preference.index('personality'))
 			else:
 				blacklist.append(b) #for those who didn't put prefs
 
@@ -99,7 +99,10 @@ def matchmaker(bear, cub):
 						tracker[c] = True
 						print 'BEAR IS CUBLESS, MATCH SUCCESSFUL'
 						# break #get outta the while loop
-
+					elif thepick == 52: #if Steph is chosen (her index is 52)
+						if cub[c].gender != 'female':
+							print "Let's try again, Steph."
+						choice += 1
 					#if bear already has a partner
 					elif bear[thepick].scores[bear[thepick].partnerID] < bear[thepick].scores[c]: #if bear would be happier switching
 						print 'BEAR ' + str(thepick) + ' ALREADY HAS A CUB, SWAP? YES'
@@ -132,6 +135,8 @@ def matchmaker(bear, cub):
 	#calculate it here rather than elsewhere hehe
 	avg = 0
 	total_happiness = 0
+	steph_partner = ''
+	kelly_partner = ''
 
 	for c in range(len(cub)): 
 		# print type(cub)
@@ -141,12 +146,18 @@ def matchmaker(bear, cub):
 		# print cub[0].scores
 		# print (cub[0]).scores
 		total_happiness += cub[c].scores[cub[c].partnerID]
+
 		# print c.scores[c.partnerID]
 		avg = float(total_happiness) / len(cub)
 	print 'AVERAGE CUB SATISFACTION IS: ' + str(avg)
 
 	total_happiness = 0
 	for b in range(len(bear)):
+		if bear[b].netid == 'spc87': 
+			steph_partner = cub[bear[b].partnerID].name
+			print 'Steph has an index of ' + str(b)
+		if bear[b].netid == 'kly24':
+			kelly_partner = cub[bear[b].partnerID].name
 		total_happiness += bear[b].scores[bear[b].partnerID]
 		avg = float(total_happiness) / len(bear)
 	print 'AVERAGE BEAR SATISFACTION IS: ' + str(avg)
@@ -155,6 +166,25 @@ def matchmaker(bear, cub):
 			# for t in xrange(n):
 			# 	i = c.scores(bookmark, i + 1)
 
+	#special case for Stephanie Chan
+	print 'Stephanie Chan is paired with ' + steph_partner
+	print 'Kelly Yu is paired with ' + kelly_partner
+
+	print 'Number of special requests: ' + str(len(requested_pairs))
+	# print 'Number of blacklisted forms: ' + str(len(blacklist))
+	print 'Number of mentees: ' + str(len(mentees))
+	print 'Number of mentors: ' + str(len(mentors))
+
+def printInfo(netid, bear, cub):
+	for c in cub:
+		if c.netid == netid:
+			print 'Hi, my name is ' + str(c.name) + ' and my major is ' + str(c.major) + ' in the college of ' + str(c.school) + '. I am a ' + str(c.religion) + ' and I am a ' + str(c.gender) + '.'
+	for b in bear:
+		if b.netid == netid:
+			print 'Hi, my name is ' + str(b.name) + ' and my major is ' + str(b.major) + ' in the college of ' + str(b.school) + '. I am a ' + str(b.religion) + ' and I am a ' + str(b.gender) + '.'
+
 if __name__ == '__main__':
 	matchmaker(mentors, mentees)
+	printInfo('st586', mentors, mentees)
+	printInfo('yy544', mentors, mentees)
 

@@ -309,7 +309,7 @@ for chicken in range(len(chicken_noodle_soup)):
 	elif sweats.text == '3': tees = 'L'
 	elif sweats.text == '4': tees = 'XL'
 	elif sweats.text == '5': tees = 'NONE'
-	else: print 'stop refushing BEARS gear'
+	else: print 'stop refusing BEARS gear'
 
 	s.tshirt = tees
 	print 'TSHIRT SIZE: ' + tees

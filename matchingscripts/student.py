@@ -64,6 +64,7 @@ class Student(object):
 		self.rankings = [] #organized by quality, the rankings
 		self.partnerID = -1
 		self.happiness = 0
+		self.gender = 'not defined' #it works without this attribute...why?
 
 		# assert 
 		# add asserts later
