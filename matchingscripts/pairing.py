@@ -24,23 +24,23 @@ def matchmaker(bear, cub):
 			score = 0
 			if 'college + major' in b.preference and 'college + major' in c.preference:
 				if b.major == c.major and b.school == c.school:
-					score += c.preference.index('college + major')
+					score += (9 - c.preference.index('college + major'))
 				if b.ethnicity == c.ethnicity:
-					score += c.preference.index('ethnicity')
+					score += (9 - c.preference.index('ethnicity'))
 				if b.hometown == c.hometown:
-					score += c.preference.index('hometown')
+					score += (9 - c.preference.index('hometown'))
 				if b.religion == c.religion:
-					score += c.preference.index('religion')
+					score += (9 - c.preference.index('religion'))
 				if b.career == c.career:
-					score += c.preference.index('career')
+					score += (9 - c.preference.index('career'))
 				if b.club == c.club:
-					score += c.preference.index('club')
+					score += (9 - c.preference.index('club'))
 				if b.sport == c.sport:
-					score += c.preference.index('sports')
+					score += (9 - c.preference.index('sports'))
 				if b.music == c.music:
-					score += c.preference.index('music')
+					score += (9 - c.preference.index('music'))
 				if b.personality == c.personality:
-					score += c.preference.index('personality')
+					score += (9 - c.preference.index('personality'))
 			else:
 				blacklist.append(b) #for those who didn't put prefs
 
@@ -110,12 +110,14 @@ def matchmaker(bear, cub):
 						#so in the above we want to departner the previous cub.
 						#we look inside the list of cubs with the current bear's partnerID
 						cub[bear[thepick].happiness].partnerID = -1
-						tracker[c] = False
+						
+						#before we change the parterID, we record that the previous cub is now bear-less
+						tracker[bear[thepick].partnerID] = False
 
 						#re-pair
 
 						#store IDs
-						bear[thepick].partnerID = c
+						bear[thepick].partnerID = c #now official a pointer to the new cub
 						cub[c].partnerID = thepick
 						tracker[c] = True
 						# break
@@ -127,21 +129,26 @@ def matchmaker(bear, cub):
 
 
 	#calculate happiness
+	#calculate it here rather than elsewhere hehe
 	avg = 0
+	total_happiness = 0
+
 	for c in range(len(cub)): 
-		print type(cub)
-		print cub
-		print type(cub[0])
-		# print cub[c].scores
-		print type(cub[0]).scores
-		(cub[c]).happiness += ((cub[c]).scores[c]).partnerID #w/o parenthesis it won't work :o
+		# print type(cub)
+		# print cub
+		# print type(cub[0])
+		# # print cub[c].scores
+		# print cub[0].scores
+		# print (cub[0]).scores
+		total_happiness += cub[c].scores[cub[c].partnerID]
 		# print c.scores[c.partnerID]
-		avg = float(happiness) / len(cub)
+		avg = float(total_happiness) / len(cub)
 	print 'AVERAGE CUB SATISFACTION IS: ' + str(avg)
 
+	total_happiness = 0
 	for b in range(len(bear)):
-		(bear[b]).happiness += ((bear[b]).scores[b]).partnerID
-		avg = float(happiness) / len(bear)
+		total_happiness += bear[b].scores[bear[b].partnerID]
+		avg = float(total_happiness) / len(bear)
 	print 'AVERAGE BEAR SATISFACTION IS: ' + str(avg)
 
 			# i = -1

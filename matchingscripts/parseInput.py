@@ -335,7 +335,7 @@ for chicken in range(len(chicken_noodle_soup)):
 	elif s.role == 'mentee' and copy == True: mentees.append(s)
 	else: print 'THE PREVIOUS STUDENT WAS NOT RECORDED  \n'
 
-	print requested_pairs
+	# print requested_pairs
 
 def getMentees():
 	return mentees
