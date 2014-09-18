@@ -1,3 +1,17 @@
+/*******BEARS FONT **********/
+
+@font-face {
+    font-family: 'SugarcubesRegular';
+    src:url('../fonts/SugarcubesRegular.eot');
+    src:url('../fonts/SugarcubesRegular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/ESugarcubesRegular.woff') format('woff'),
+        url('../fonts/SugarcubesRegular.ttf') format('truetype'),
+        url('../fonts/SugarcubesRegular.svg#SugarcubesRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 /********** GENERAL STYLES **********/
 
 body{ font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
@@ -810,3 +824,15 @@ footer.footer-alt span.sub .icon_heart{ color: #f73333; font-size: 14px; positio
 
 .headtitle{ text-align: center; margin-bottom: 5px;}
 .headquote{ text-align: center; margin-bottom: 25px; color: #383838;}
+
+
+/************ KELLY'S STYLES ***********/
+.bears-logo-text {
+  font-family: 'SugarcubesRegular', serif;
+  font-size: 3em;
+  color: #fff;
+}
+
+.bears-logo-text:hover {
+  color: #fff;
+}
