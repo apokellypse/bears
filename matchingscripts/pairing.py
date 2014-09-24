@@ -85,34 +85,35 @@ def matchmaker(bear, cub):
 		print '\n TODAY WE MATCH ' + str(len(cub)) + ' CUBS WITH ' + str(len(bear)) + ' BEARS'
 		for c in range(len(cub)): #iterating through students' indices
 
-			print '\n    CURRENTLY MATCHING CUB ' + str(c)
+			print '\n    CURRENTLY MATCHING CUB ' + str(c) + cub[c].name + " " + cub[c].netid
 			assert type(cub[c] != int)
-			if cub[c].partnerID == -1:
-				choice = 0;
-				while cub[c].partnerID == -1:
+			choice = 0;
+			print 'current partnerID is: ' + str(cub[c].partnerID) + ' name is ' + str(bear[cub[c].partnerID].name) + ' netid is ' + str(bear[cub[c].partnerID].netid)
+			if cub[c].partnerID == False and str(bear[cub[c].partnerID].name) != "":
+				while cub[c].partnerID == False:
 					thepick = cub[c].rankings[choice] #returns you the index of your top choice
-					print 'Attempt No. ' + str(choice) + ', CUB ' + str(c) + ' WANTS BEAR ' + str(thepick)
-					if bear[thepick].partnerID == -1: #bear has no partner
+					print 'Attempt No. ' + str(choice) + ', CUB ' + str(c) + ' WANTS BEAR ' + str(thepick) + bear[thepick].name + " " + bear[thepick].netid
+					if bear[thepick].partnerID == False: #bear has no partner
 						#store IDs
 						bear[thepick].partnerID = c
 						cub[c].partnerID = thepick 
 						tracker[c] = True
-						print 'BEAR IS CUBLESS, MATCH SUCCESSFUL'
-						# break #get outta the while loop
-					elif thepick == 52: #if Steph is chosen (her index is 52)
+						print 'BEAR IS CUBLESS, MATCH SUCCESSFUL' + 'NEW PAIR IS ' + cub[c].name + " " + cub[c].netid + ' is paired with ' + bear[thepick].name + " " + bear[thepick].netid
+
+					elif thepick == 62: #if Steph is chosen (her index is 52)
 						if cub[c].gender != 'female':
 							print "Let's try again, Steph."
 						choice += 1
-					#if bear already has a partner
+
 					elif bear[thepick].scores[bear[thepick].partnerID] < bear[thepick].scores[c]: #if bear would be happier switching
-						print 'BEAR ' + str(thepick) + ' ALREADY HAS A CUB, SWAP? YES'
+						print 'BEAR ' + str(thepick) + bear[thepick].name + bear[thepick].netid + ' CURRENTLY PARIED WITH ' + cub[bear[thepick].partnerID].name + ', SWAP? YES'
 						#so the first part of the above statement is the score the bear gave its current cub
 						#the second part of the statement is the score the bear has given to the prospective
 						#abandon cub
-						cub[bear[thepick].partnerID].partnerID = -1
+						cub[bear[thepick].partnerID].partnerID = False
 						#so in the above we want to departner the previous cub.
 						#we look inside the list of cubs with the current bear's partnerID
-						cub[bear[thepick].happiness].partnerID = -1
+						cub[bear[thepick].happiness].partnerID = False
 						
 						#before we change the parterID, we record that the previous cub is now bear-less
 						tracker[bear[thepick].partnerID] = False
@@ -123,9 +124,10 @@ def matchmaker(bear, cub):
 						bear[thepick].partnerID = c #now official a pointer to the new cub
 						cub[c].partnerID = thepick
 						tracker[c] = True
-						# break
+						'NEW PAIR: ' + cub[c].name + " " + cub[c].netid + ' is paired with ' + bear[thepick].name + " " + bear[thepick].netid
+
 					else: #bear is satisfied, but cub still alone
-						print 'BEAR ' + str(thepick) + ' ALREADY HAS A CUB, SWAP? NO'
+						print 'BEAR ' + str(thepick) + bear[thepick].name + bear[thepick].netid + ' CURRENTLY PARIED WITH ' + cub[bear[thepick].partnerID].name + ' ALREADY HAS A CUB, SWAP? NO'
 						choice += 1
 					# print str(cub[c].partnerID)
 
@@ -158,6 +160,7 @@ def matchmaker(bear, cub):
 			print 'Steph has an index of ' + str(b)
 		if bear[b].netid == 'kly24':
 			kelly_partner = cub[bear[b].partnerID].name
+			print 'Kelly has an index of ' + str(b)
 		total_happiness += bear[b].scores[bear[b].partnerID]
 		avg = float(total_happiness) / len(bear)
 	print 'AVERAGE BEAR SATISFACTION IS: ' + str(avg)
@@ -175,16 +178,39 @@ def matchmaker(bear, cub):
 	print 'Number of mentees: ' + str(len(mentees))
 	print 'Number of mentors: ' + str(len(mentors))
 
+	f = open('export.txt', 'w') #writing to this file
+	for c in range(len(cub)):
+		s = cub[c].name + ", " + cub[c].netid + " <---> " + bear[cub[c].partnerID].name + ", " + bear[cub[c].partnerID].netid + "\n"
+		f.write(s)
+	f.write("\n\n")
+	for b in range(len(bear)):
+		s = bear[b].name + ", " + bear[b].netid + "\n"
+		 # + " <---> " + cub[bear[b].partnerID].name + ", " + cub[bear[b].partnerID].netid + "\n"
+		f.write(s)
+
 def printInfo(netid, bear, cub):
 	for c in cub:
 		if c.netid == netid:
 			print 'Hi, my name is ' + str(c.name) + ' and my major is ' + str(c.major) + ' in the college of ' + str(c.school) + '. I am a ' + str(c.religion) + ' and I am a ' + str(c.gender) + '.'
+			print str(c.preference) + "\n"
+
 	for b in bear:
 		if b.netid == netid:
 			print 'Hi, my name is ' + str(b.name) + ' and my major is ' + str(b.major) + ' in the college of ' + str(b.school) + '. I am a ' + str(b.religion) + ' and I am a ' + str(b.gender) + '.'
+			print str(b.preference) + "\n"
 
 if __name__ == '__main__':
-	matchmaker(mentors, mentees)
-	printInfo('st586', mentors, mentees)
-	printInfo('yy544', mentors, mentees)
+	# matchmaker(mentors, mentees)
+	# printInfo('st586', mentors, mentees)
+	# printInfo('yy544', mentors, mentees)
+	# printInfo('xw234', mentors, mentees)
+	printInfo('mak428', mentors, mentees)
+	printInfo('ceb285', mentors, mentees)
+	printInfo('yhy5', mentors, mentees)
+	print "\n\n\n"
+	printInfo('lml253', mentors, mentees)
+	printInfo('nc354', mentors, mentees)
+	printInfo('ih235', mentors, mentees)
+
+
 

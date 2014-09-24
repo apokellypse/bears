@@ -76,34 +76,35 @@ for chicken in range(len(chicken_noodle_soup)):
 	#HANDLING UNFINISHED RESPONSES
 	blah = french_onion_soup.find('Finished')
 	if blah.text == '0':
-		print '\n FOUND UNFINISHED, WILL NOT RECORD \n'
-		copy = False
+		x = "stub"
+		# print '\n FOUND UNFINISHED, WILL NOT RECORD \n'
+		# copy = False
 
 	#NAMES
 	n = french_onion_soup.find('Q3_1_TEXT')
 	s.name = n.text
-	print "NAME: " + s.name
+	# print "NAME: " + s.name
 
 	#NETID
 	n = french_onion_soup.find('Q3_2_TEXT')
 	s.netid = n.text
-	print "NETID: " + s.netid
+	# print "NETID: " + s.netid
 	# assert re.search('([a-z^A-Z]{2,3}[0-9]{1,3}|[0-9]{7})', s.netid)
 
 	#BIRTHDAY
 	b = french_onion_soup.find('Q3_3_TEXT')
 	s.birthday = b.text 
-	print "BIRTHDAY: " + s.birthday
+	# print "BIRTHDAY: " + s.birthday
 
 	#MENTOR VS MENTEE
 	m = french_onion_soup.find('Q28')
 	s.role = "mentor" if m.text == "1" else "mentee" #I LOVE TERNARY OPS
-	print "ROLE: " + s.role
+	# print "ROLE: " + s.role
 
 	#GENDER
 	g = french_onion_soup.find('Q25')
 	s.gender = "male" if g.text =="1" else "female"
-	print "GENDER: " + s.gender
+	# print "GENDER: " + s.gender
 
 	#YEAR
 	y = french_onion_soup.find('Q2')
@@ -113,7 +114,7 @@ for chicken in range(len(chicken_noodle_soup)):
 	elif (y.text == "3"): year_name = "junior"
 	else: year_name = "senior"
 	s.year = year_name
-	print "YEAR: " + s.year
+	# print "YEAR: " + s.year
 
 	#COLLEGE
 	c = french_onion_soup.find('Q4')
@@ -127,7 +128,7 @@ for chicken in range(len(chicken_noodle_soup)):
 	elif (c.text == "7"): college_name = 'ILR'
 	else: print "you done messed up"
 	s.school = college_name
-	print "SCHOOL: " + s.school
+	# print "SCHOOL: " + s.school
 
 	#MAJOR
 	attribute = 'NA'
@@ -155,7 +156,7 @@ for chicken in range(len(chicken_noodle_soup)):
 	else: print 'you are in trouble'
 	s.major = attribute
 	attribute = 'NA' #reset
-	print 'MAJOR: ' + str(s.major)
+	# print 'MAJOR: ' + str(s.major)
 
 	#ETHNICITY
 	p = french_onion_soup.find('Q6')
@@ -175,13 +176,13 @@ for chicken in range(len(chicken_noodle_soup)):
 	if pt.text != "":
 		s.ethnicity = pt.text;
 
-	print 'ETHNICITY: ' + s.ethnicity
+	# print 'ETHNICITY: ' + s.ethnicity
 
 	#HOMETOWN
 	h = french_onion_soup.find('Q17')
 	s.hometown = h.text
 
-	print 'HOMETOWN: ' + s.hometown
+	# print 'HOMETOWN: ' + s.hometown
 
 	#RELIGION
 	r = french_onion_soup.find('Q12')
@@ -199,14 +200,14 @@ for chicken in range(len(chicken_noodle_soup)):
 	if rt.text != '':
 		s.religion = rt.text
 
-	print 'RELIGION: ' + s.religion
+	# print 'RELIGION: ' + s.religion
 
 	#CAREER INTERESTS
 	regexHandler('(Q16_[0-9]{1,2})', career_options)
 	s.career = attribute
 	attribute = 'NA'
 	# assert type(s.career) == list
-	print 'CAREER: ' + str(s.career)
+	# print 'CAREER: ' + str(s.career)
 	# s.career = career_options[int(c.text)]
 
 	#EXTRACURRICULAR INTERESTS
@@ -220,32 +221,34 @@ for chicken in range(len(chicken_noodle_soup)):
 		s.club[len(s.club)-1] = otherclub.text
 
 	# assert type(s.club) == list
-	print 'CLUB: ' + str(s.club)
+	# print 'CLUB: ' + str(s.club)
 
 	#SPORTS
 	chosen_sport = french_onion_soup.find('Q15')
 
 	if chosen_sport.text == '':
-		print 'HE DID NOT FILL IT OUT'
+		x = "stub"
+		# print 'HE DID NOT FILL IT OUT'
 	else:
 		if chosen_sport.text == '24':
 			other_sport = french_onion_soup.find('Q15_TEXT')
 			s.sport = other_sport.text
 		else:
 			s.sport = sports_list[int(float(chosen_sport.text)) - 1]
-	print 'SPORT: ' + str(s.sport)
+	# print 'SPORT: ' + str(s.sport)
 
 	chosen_music = french_onion_soup.find('Q18')
 
 	if chosen_music.text == '':
-		print 'IF ONLY YOU LIKED MUSIC'
+		x = "stub"
+		# print 'IF ONLY YOU LIKED MUSIC'
 	else:
 		if chosen_music.text == '15':
 			other_music = french_onion_soup.find('Q18_TEXT')
 			s.music = other_music.text
 		else:
 			s.music = music_list[int(float(chosen_music.text)) - 1]
-	print 'MUSIC: ' + str(s.music)
+	# print 'MUSIC: ' + str(s.music)
 
 	#PERSONALITY
 	vert = french_onion_soup.find('Q20_1')
@@ -260,34 +263,44 @@ for chicken in range(len(chicken_noodle_soup)):
 	if vert.text == '1': shyornot = 'introverted'
 	elif vert.text == '2': shyornot = 'neutralverted'
 	elif vert.text == '3': shyornot = 'extraverted'
-	else: print "are you shy or not?"
+	else: 
+		lala = "what"
+		# print "are you shy or not?"
 
 	actfast = ''
 	if action.text == '1': actfast = 'thoughtful'
 	elif action.text == '2': actfast = 'acts neither fast nor slow'
 	elif action.text == '3': actfast = 'impulsive'
-	else: print "are you thoughtful or impuslive?" 
+	else: 
+		lala = "what"
+		# print "are you thoughtful or impuslive?" 
 
 	carelessful = ''
 	if worrymeter.text == '1': carelessful = 'carefree'
 	elif worrymeter.text == '2': carelessful = 'neither carefree nor worried'
 	elif worrymeter.text == '3': carelessful = 'worried'
-	else: print 'are you worried right now because I am'
+	else: 
+		lala = "what"
+		# print 'are you worried right now because I am'
 
 	neatfreak = ''
 	if neatness.text == '1': neatfreak = 'disorganized'
 	elif neatness.text == '2': neatfreak = 'kinda messy but not really'
 	elif neatness.text == '3': neatfreak = 'organized'
-	else: print 'are you messy'
+	else: 
+		lala = "what"
+		# print 'are you messy'
 
 	brain = ''
 	if thinking.text == '1': brain = 'practical'
 	elif thinking.text == '2': brain = 'not that practical'
 	elif thinking.text == '3': brain = 'idealistic'
-	else: print 'is your head in the clouds'
+	else: 
+		lala = "what"
+		# print 'is your head in the clouds'
 
 	s.personality = [shyornot, actfast, carelessful, neatfreak, brain]
-	print 'PERSONALITY: ' + str(s.personality)
+	# print 'PERSONALITY: ' + str(s.personality)
 
 	#PREFERENCES
 	where = 0
@@ -295,11 +308,11 @@ for chicken in range(len(chicken_noodle_soup)):
 	for baguette in french_onion_soup.findAll(re.compile('(Q19_[0-9]{1})')):
 		# print baguette.text
 		if baguette.text == '': 
-			print 'what are you prefs son'
+			# print 'what are you prefs son'
 			break
 		s.preference[int(float(baguette.text)) - 1] = prefs_list[where]
 		where += 1
-	print 'PREFERENCE: ' + str(s.preference)
+	# print 'PREFERENCE: ' + str(s.preference)
 
 	#SHIRTS
 	sweats = french_onion_soup.find('Q18')
@@ -309,10 +322,12 @@ for chicken in range(len(chicken_noodle_soup)):
 	elif sweats.text == '3': tees = 'L'
 	elif sweats.text == '4': tees = 'XL'
 	elif sweats.text == '5': tees = 'NONE'
-	else: print 'stop refusing BEARS gear'
+	else: 
+		lala = "what"
+		# print 'stop refusing BEARS gear'
 
 	s.tshirt = tees
-	print 'TSHIRT SIZE: ' + tees
+	# print 'TSHIRT SIZE: ' + tees
 
 	#PARTNER REQUESTS
 	first = french_onion_soup.find('Q24_1_TEXT')
@@ -321,19 +336,23 @@ for chicken in range(len(chicken_noodle_soup)):
 	guy2 = second.text
 	s.request = [guy1, guy2]
 	
-	print 'first request: ' + str(guy1)
-	print 'second request: ' + str(guy2)
-	if str(guy1) == "" and str(guy2) == "": print 'DID NOT REQUEST ANYONE \n'
+	# print 'first request: ' + str(guy1)
+	# print 'second request: ' + str(guy2)
+	if str(guy1) == "" and str(guy2) == "": 
+		x = "stub"
+		# print 'DID NOT REQUEST ANYONE \n'
 	else: 
 		copy = False
 		requested_pairs.append(str(s.name) + ' requested ' + str(guy1) + ' and ' + str(guy2))
-		print 'REQUESTED: ' + str(s.request) + '\n'
+		# print 'REQUESTED: ' + str(s.request) + '\n'
 
 
 	#SAVE
-	if s.role == 'mentor' and copy == True: mentors.append(s)
-	elif s.role == 'mentee' and copy == True: mentees.append(s)
-	else: print 'THE PREVIOUS STUDENT WAS NOT RECORDED  \n'
+	if s.role == 'mentor': mentors.append(s)
+	elif s.role == 'mentee': mentees.append(s)
+	else: 
+		lala = "what"
+		# print 'THE PREVIOUS STUDENT WAS NOT RECORDED  \n'
 
 	# print requested_pairs
 

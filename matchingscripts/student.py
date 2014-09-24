@@ -62,7 +62,7 @@ class Student(object):
 		self.request = request
 		self.scores = [] #organized by index, the scores
 		self.rankings = [] #organized by quality, the rankings
-		self.partnerID = -1
+		self.partnerID = False 
 		self.happiness = 0
 		self.gender = 'not defined' #it works without this attribute...why?
 
