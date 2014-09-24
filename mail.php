@@ -6,7 +6,7 @@ if ($_POST) {
     $headers = "Email \r\n".$email."\r\n\r\nName \r\n".$name;
     
     //send email   
-    mail("shm95@cornell.edu", "email enquiry", $message, $headers);
+    mail("bearscornell@gmail.com", "email enquiry", $message, $headers);
 }
 
 ?>

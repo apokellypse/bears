@@ -249,7 +249,7 @@ ul{ list-style: none; }
 
 .horizontal-line{ background: #222; opacity: 0.2; height: 2px; width: 40px; margin: 0px auto; margin-top: 22px; margin-bottom: 22px;  }
 
-.border-box{ border: 2px solid #454545; padding: 37px 18px; height: 350px;}
+.border-box{ border: 2px solid #454545; padding: 37px 18px; height: 375px;}
 .border-box i{ font-size: 46px; color: #454545; display: inline-block; margin-bottom: 17px; transition: all .2s ease; -webkit-transition: all .2s ease; -moz-transition: all .2s ease; position: relative; bottom: 0px; }
 .border-box h6{ margin-bottom: 0px; letter-spacing: 2px; margin-right: -2px; }
 .border-box .horizontal-line{ opacity: 0.8; }
@@ -835,4 +835,12 @@ footer.footer-alt span.sub .icon_heart{ color: #f73333; font-size: 14px; positio
 
 .bears-logo-text:hover {
   color: #fff;
+}
+
+.row-center {
+  text-align: center;
+}
+
+.spacer {
+  padding-bottom: 40px;
 }
