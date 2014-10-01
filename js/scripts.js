@@ -438,4 +438,16 @@ $(window).load(function () {
 
     });
 
+    //Kelly Yu's script for basic form handling and nice things too
+    $("#logform").css("height", "110px"); //don't show the form right away
+    $("#logform").css("overflow", "hidden"); //should use CSS instead
+    $('#logformclick').click(function() {
+        if ($('#logform').css("height") != "385px") {
+            $('#logform').animate({height:385},200);
+            // $("#logform").fadeIn(200);
+        } else {
+            $('#logform').animate({height:110},200);
+        }
+    });
+
 });
