@@ -855,7 +855,7 @@ footer.footer-alt span.sub .icon_heart{ color: #f73333; font-size: 14px; positio
   text-align: center;
   width: 600px;
   margin: 15px;
-  left: 210px;
+  /*left: 210px;*/
 }
 
 #logform input[type="submit"] {

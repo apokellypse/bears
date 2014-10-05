@@ -125,7 +125,7 @@ if ((($_FILES["the_file"]["type"] == "image/gif")
   					<li><a href="index.html">Home</a></li>
   					<li><a href="about-us.html">About Us</a></li>
   					<!-- <li><a href="https://cornell.qualtrics.com/SE/?SID=SV_cIT8rVXLtnTyG5n">Join</a></li> -->
-  					<li><a href="members.html">Members</a></li>
+  					<li><a href="members.php">Members</a></li>
   					<li><a href="faq.html">FAQ</a></li>
   					<li><a href="contact.html">Contact</a></li>
   				</ul>
@@ -154,7 +154,7 @@ if ((($_FILES["the_file"]["type"] == "image/gif")
 		</div>
    		<div class="text-center">
    			<div id="logform">
-			<a href="#" id="logformclick" class="button button-small button-black button-filled">Upload Monthly Picture Here!<i class="icon icon_upload"></i></a>
+			<a href="javascript:void(0)" id="logformclick" class="button button-small button-black button-filled">Upload Monthly Picture Here!<i class="icon icon_upload"></i></a>
 				<form action="members.php" method="post" enctype="multipart/form-data">
 					<div class="logformbox">
 						<label for="text">Mentor NetID:</label>
@@ -166,6 +166,7 @@ if ((($_FILES["the_file"]["type"] == "image/gif")
 					</div>
 					<label for="file">Browse for the picture</label>
 					<input type="file" name="the_file" id="file"><br>
+					<!-- <input type="image" name="the_file" id="file"><br> -->
 					<label for="submit">Press Submit after you've selected your picture</label>
 					<input type="submit" name="submit" value="Submit">
 				</form>
