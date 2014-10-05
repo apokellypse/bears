@@ -24,6 +24,29 @@
 
 <?php
 
+//where the .errorbox div is:
+$varMessage = "";
+
+//http://www.html-form-guide.com/php-form/php-form-tutorial.html
+if ($_POST['submit'] == "Submit") {
+	$varPlscomplete = "";
+	if (empty($_POST['mentor'])) {
+		$varPlscomplete = '<div class="incomplete">You need to enter in the Mentor\'s ID.</div>';
+	}
+	if (empty($_POST['mentee'])) {
+		$varPlscomplete = $varPlscomplete . '<div class="incomplete">You need to enter in the Mentee\'s ID.</div>';
+	}
+	$varMentor = $_POST['mentor'];
+	$varMentee = $_POST['mentee'];
+
+	if(!empty($varPlscomplete)) {
+		$varMessage = '<div class="incomplete">There was an error with your form:' . $varPlscomplete . "</div>";
+	}
+}
+
+//begin handling picture upload:
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
 
 $allowedExts = array("gif", "jpeg", "jpg", "png", "GIF", "JPEG", "JPG", "PNG");
@@ -38,6 +61,8 @@ $menteeNetID = $_POST['mentee'];
 // echo ($menteeNetID);
 // echo $_SERVER['REQUEST_TIME'];
 
+
+//GETTING TIME
 date_default_timezone_set("America/New_York");
 
 //below 4 lines are from php.net
@@ -63,15 +88,27 @@ if ((($_FILES["the_file"]["type"] == "image/gif")
 	&& in_array($extension, $allowedExts)) {
 
 	if ($_FILES["the_file"]["error"] > 0) {
-		echo '<div class="upload_fail">We encountered an error: ' . $_FILES["the_file"]["error"] . "</div>";
+		// echo '<div class="upload_fail">We encountered an error: ' . $_FILES["the_file"]["error"] . "</div>";
+		if ($varMessage == "") $varMessage = '<div class="upload_fail">We encountered an error: ' . $_FILES["the_file"]["error"] . "</div>";
 	} else {
 		$newname = "" . $mentorNetID . "_" . $menteeNetID . '_' . $year . '_' . $month . '_' . $date . '_' . $hour . '_' . $min . '_' . $sec . '_' . "." . $extension;
 		// if (file_exists("uploads/{$_FILES['the_file']['name']}")) {
 		if (file_exists("uploads/" . $newname)) {
-			echo '<div class="upload_warning">' . $_FILES["the_file"]["name"] . " already exists in our database.</div>";
+			// echo '<div class="upload_warning">' . $_FILES["the_file"]["name"] . " already exists in our database.</div>";
+			if ($varMessage == "") $varMessage = '<div class="upload_warning">' . $_FILES["the_file"]["name"] . " already exists in our database.</div>";
 		} else {
 			if (move_uploaded_file($_FILES['the_file']['tmp_name'], "uploads/" . $newname)) { //I've renamed the file
-				print '<div class="upload_success">Your picture has been uploaded! Great job this month!</div>';
+				// print '<div class="upload_success">Your picture has been uploaded! Great job this month!</div>';
+				if ($varMessage == "") $varMessage = '<div class="upload_success">Your picture has been uploaded! Great job this month!</div>';
+			
+				//begin handling saving data to .csv file
+				$fs = fopen("data.csv", "a");
+				fwrite($fs, $varMentor . ", " . $varMentee . "\n");
+				fclose($fs);
+
+				// header("index.php");
+				// exit;
+
 			} else { 
 				print '<div class="upload_fail">Your file could not be uploaded because: ';
 				switch ($_FILES['the_file']['error']) {
@@ -100,18 +137,19 @@ if ((($_FILES["the_file"]["type"] == "image/gif")
 		}
 	}
 } else {
-	echo '<div class="upload_fail">You have tried to upload an invalid file type, or your file is too big (please keep sizes under 2 MB).</div>';
+	// echo '<div class="upload_fail">You have tried to upload an invalid file type, or your file is too big (please keep sizes under 2 MB).</div>';
+	if ($varMessage == "") $varMessage = '<div class="upload_fail">You have tried to upload an invalid file type, or your file is too big (please keep sizes under 2 MB).</div>';
 }
 }
 
 ?>
 
-
-  	<div class="loader">
+<!--removing preload because takes too darn long-->
+<!--   	<div class="loader">
 			<div id="preload">
 				<img src="img/bears.png" alt="preload">
 			</div>
-		</div>
+		</div> -->
   	
   	<nav class="nav-transparent overlay-nav sticky-nav">
   	
@@ -148,7 +186,16 @@ if ((($_FILES["the_file"]["type"] == "image/gif")
 	
 	</header>
 
+	<section class="background-white errorbox">
+		<?=$varMessage;?>
+	</section>
+
+<!-- 	<section class="background-white errorbox">
+		<?=$varPlscomplete;?>
+	</section> -->
+
    	<section class-"background-white">
+
    		<div class="row">
 			<h3 class="headtitle">Current Members Only</h3>
 		</div>
@@ -158,11 +205,11 @@ if ((($_FILES["the_file"]["type"] == "image/gif")
 				<form action="members.php" method="post" enctype="multipart/form-data">
 					<div class="logformbox">
 						<label for="text">Mentor NetID:</label>
-						<input type="text" name="mentor" placeholder="type here">
+						<input type="text" name="mentor" maxlength="7" placeholder="type here">
 					</div>
 					<div class="logformbox">
 						<label for="text">Mentee NetID:</label>
-						<input type="text" name="mentee" placeholder="type here">
+						<input type="text" name="mentee" maxength="7" placeholder="type here">
 					</div>
 					<label for="file">Browse for the picture</label>
 					<input type="file" name="the_file" id="file"><br>

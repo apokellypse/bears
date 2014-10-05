@@ -883,7 +883,7 @@ footer.footer-alt span.sub .icon_heart{ color: #f73333; font-size: 14px; positio
   border: 1px solid #636363;
 }
 
-.upload_fail, .upload_warning, .upload_success {
+.upload_fail, .upload_warning, .upload_success, .incomplete {
   text-align: center;
   padding : 10px;
 }
@@ -891,6 +891,17 @@ footer.footer-alt span.sub .icon_heart{ color: #f73333; font-size: 14px; positio
 .upload_fail {
   background: #94282A;
   color: white;
+}
+
+.incomplete {
+  padding: 20px;
+  background: #6588C2;
+  color: white;
+}
+
+.incomplete > div {
+  padding: 0;
+  padding-top: 10px;
 }
 
 .upload_warning {
@@ -907,4 +918,9 @@ footer.footer-alt span.sub .icon_heart{ color: #f73333; font-size: 14px; positio
   display: inline-block; 
   width: 200px;
   height: 50px
+}
+
+.errorbox {
+  padding: 0;
+  margin: 0;
 }
