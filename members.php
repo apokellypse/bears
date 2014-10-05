@@ -145,11 +145,12 @@ if ((($_FILES["the_file"]["type"] == "image/gif")
 ?>
 
 <!--removing preload because takes too darn long-->
-<!--   	<div class="loader">
+<!--changed my mind, it stalls while the rest of the page to format, which is nice-->
+  	<div class="loader">
 			<div id="preload">
 				<img src="img/bears.png" alt="preload">
 			</div>
-		</div> -->
+		</div>
   	
   	<nav class="nav-transparent overlay-nav sticky-nav">
   	
@@ -194,7 +195,7 @@ if ((($_FILES["the_file"]["type"] == "image/gif")
 		<?=$varPlscomplete;?>
 	</section> -->
 
-   	<section class-"background-white">
+   	<section class="background-white logformsection">
 
    		<div class="row">
 			<h3 class="headtitle">Current Members Only</h3>

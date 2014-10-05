@@ -442,11 +442,13 @@ $(window).load(function () {
     $("#logform").css("height", "110px"); //don't show the form right away
     $("#logform").css("overflow", "hidden"); //should use CSS instead
     $('#logformclick').click(function() {
-        if ($('#logform').css("height") != "420") {
-            $('#logform').animate({height:420},200);
+        if ($('#logform').css("height") != "500px") {
+            $('#logform').animate({height:500},200);
+            console.log('going to expand');
             // $("#logform").fadeIn(200);
         } else {
             $('#logform').animate({height:110},200);
+            console.log('going to shrink');
         }
     });
 
