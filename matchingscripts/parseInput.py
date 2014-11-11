@@ -7,7 +7,8 @@ from student import *
 from bs4 import BeautifulSoup
 import re
 
-soup = BeautifulSoup(open("input.xml"), "xml")
+# soup = BeautifulSoup(open("input.xml"), "xml")
+soup = BeautifulSoup(open("input-rematch.xml"), "xml")
 chicken_noodle_soup = []
 mentors = []
 mentees = []

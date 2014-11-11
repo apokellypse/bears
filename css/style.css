@@ -848,6 +848,57 @@ footer.footer-alt span.sub .icon_heart{ color: #f73333; font-size: 14px; positio
   padding-bottom: 40px;
 }
 
+
+/*FRONT PAGE*/
+section#front-page-top {
+  margin: 0;
+  overflow-x: hidden;
+  background: url(../img/first-event6.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  /*thanks for css-tricks.com for suggesting this method*/
+}
+
+section#front-page-top > div {
+  margin-top: 30px;
+  position: relative;
+  right: 26.5%;
+  /*background: rgba(255,255,255,0.5);*/
+  background: rgba(0,0,0,0.9);
+  width: 700px;
+  padding: 40px 20px;
+  color: #f2f2f2;
+}
+
+section#front-page-top > div > div > p {
+  color: #BFAB94;
+  font-size: 1em;
+}
+
+section#front-page-top > div.row > h3.headtitle,
+section#front-page-top > div.row > div.headquote {
+  color: #D26161; 
+}
+
+section#front-page-top > div.row > div.headquote {
+  margin-bottom: 40px;
+}
+
+section#front-page-top > div > div > h6 {
+  color: #BFAB94;
+}
+
+#front-page-top > div > div > div.icon-box {
+  color: #867171;
+  border: 2px solid #aaaaaa;
+}
+
+.medium-a {
+  width: 50%;
+}
+
 /*PHP FORM FOR UPLOADING PICTURES*/
 
 #logform input[type="file"] {

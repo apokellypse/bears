@@ -438,6 +438,7 @@ $(window).load(function () {
 
     });
 
+    //KELLY'S PARTY RIGHT HERE
     //Kelly Yu's script for basic form handling and nice things too
     $("#logform").css("height", "110px"); //don't show the form right away
     $("#logform").css("overflow", "hidden"); //should use CSS instead
@@ -451,5 +452,9 @@ $(window).load(function () {
             console.log('going to shrink');
         }
     });
+
+
+    $('section#front-page-top > div.row').hide();
+    $('section#front-page-top > div.row').fadeIn(2000);
 
 });

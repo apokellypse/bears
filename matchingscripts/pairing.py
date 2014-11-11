@@ -191,26 +191,39 @@ def matchmaker(bear, cub):
 def printInfo(netid, bear, cub):
 	for c in cub:
 		if c.netid == netid:
-			print 'Hi, my name is ' + str(c.name) + ' and my major is ' + str(c.major) + ' in the college of ' + str(c.school) + '. I am a ' + str(c.religion) + ' and I am a ' + str(c.gender) + '.'
-			print str(c.preference) + "\n"
+			# print 'Hi, my name is ' + str(c.name) + ' and my major is ' + str(c.major) + ' in the college of ' + str(c.school) + '. I am a ' + str(c.religion) + ' and I am a ' + str(c.gender) + '.'
+			# print str(c.preference) + "\n"
+			print '\nPreference: ' + str(c.preference) + 'Name: ' + str(c.name) + '\nNetid: ' + str(c.netid) + '\nRole: ' + str(c.role) + '\nSchool: ' + str(c.school) + '\nMajor: ' + str(c.major) + '\nPersonality: ' + str(c.personality) + '\nReligion: ' + str(c.religion)
 
-	for b in bear:
-		if b.netid == netid:
-			print 'Hi, my name is ' + str(b.name) + ' and my major is ' + str(b.major) + ' in the college of ' + str(b.school) + '. I am a ' + str(b.religion) + ' and I am a ' + str(b.gender) + '.'
-			print str(b.preference) + "\n"
+	for c in bear:
+		if c.netid == netid:
+			# print 'Hi, my name is ' + str(b.name) + ' and my major is ' + str(b.major) + ' in the college of ' + str(b.school) + '. I am a ' + str(b.religion) + ' and I am a ' + str(b.gender) + '.'
+			# print str(b.preference) + "\n"
+			print '\nPreference: ' + str(c.preference) + 'Name: ' + str(c.name) + '\nNetid: ' + str(c.netid) + '\nRole: ' + str(c.role) + '\nSchool: ' + str(c.school) + '\nMajor: ' + str(c.major) + '\nPersonality: ' + str(c.personality) + '\nReligion: ' + str(c.religion)
 
 if __name__ == '__main__':
-	# matchmaker(mentors, mentees)
+	matchmaker(mentors, mentees)
 	# printInfo('st586', mentors, mentees)
 	# printInfo('yy544', mentors, mentees)
 	# printInfo('xw234', mentors, mentees)
-	printInfo('mak428', mentors, mentees)
-	printInfo('ceb285', mentors, mentees)
-	printInfo('yhy5', mentors, mentees)
+	# printInfo('mak428', mentors, mentees)
+	# printInfo('ceb285', mentors, mentees)
+	# printInfo('yhy5', mentors, mentees)
 	print "\n\n\n"
-	printInfo('lml253', mentors, mentees)
-	printInfo('nc354', mentors, mentees)
-	printInfo('ih235', mentors, mentees)
+	# printInfo('lml253', mentors, mentees)
+	# printInfo('nc354', mentors, mentees)
+	# printInfo('ih235', mentors, mentees)
+	printInfo('nsl36', mentors, mentees)
+	printInfo('szh6', mentors, mentees)
+	printInfo('srh98', mentors, mentees)
+	printInfo('nja34', mentors, mentees)
+	printInfo('cbc72', mentors, mentees)
+	printInfo('css232', mentors, mentees)
+	printInfo('dar262', mentors, mentees)
+	printInfo('nsr44', mentors, mentees)
+	printInfo('ztp3', mentors, mentees)
+	printInfo('mts223', mentors, mentees)
+	printInfo('tja59', mentors, mentees)
 
 
 

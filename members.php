@@ -222,7 +222,7 @@ if ((($_FILES["the_file"]["type"] == "image/gif")
 		</div>
 	</section>
 
-	<section class="background-mid-grey">
+	<section style="display:none" class="background-mid-grey">
 	
 <!-- 		<div class="row">
 			<div class="medium-12 columns">
@@ -350,6 +350,18 @@ if ((($_FILES["the_file"]["type"] == "image/gif")
 		</div>
 	
 	</section><!--end home features-->
+
+<!--add form for feedback-->
+	<section class="background-mid-grey">
+		<div class="row">
+			<h3 class="headtitle">I'm Kinda Busy...</h3>
+			<div class="headquote"><br>The ONLY requirement BEARS has is that pairs meet once a month. <br><br>
+			That’s all. <br><br>
+			And this meeting can be as simple as a 15-minute talk over coffee, which could be a study break. <br><br>
+			Also, it’s always a good idea to give back to the community.
+			</div>
+		</div>
+	</section>
 				
 	<footer class="dark">
 		
