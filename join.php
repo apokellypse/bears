@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 
 	if ($submit == 'Submit') {
-		print 'form submitted';	
+		// print 'form submitted';	
 	}
 
 	// print '<div> ' . $submitno . '</div>';
@@ -454,7 +454,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     | |                                          
     |_|                                           -->
     		<?php elseif ($submitno == 4): ?>
-    			<label for="form-gen">
+    			<label for="form-gen">Gender</label>
 				<select name="form-gen" id="form-gen">
 					<option>Male</option>
 					<option>Female</option>
@@ -543,7 +543,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     		<?php elseif ($submitno == 5): ?>
-
+    			<div class="centerheading"><h4>What Career are you Interested In?</h4></div>
     			<select>
 					<option>Administration</option>
 					<option>Aerospace Engineering</option>
