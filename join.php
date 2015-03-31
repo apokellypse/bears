@@ -8,6 +8,7 @@ $prevpage = max($submitno - 1, 1);
 $undergrad = isset($_SESSION['undergrad']) ? $_SESSION['undergrad'] : NULL;
 $cornell = isset($_SESSION['cornell']) ? $_SESSION['cornell'] : NULL;
 $cornell_grad = isset($_SESSION['cornell_grad']) ? $_SESSION['cornell_grad'] : NULL;
+$cornell_ugrad = isset($_SESSION['cornell_ugrad']) ? $_SESSION['cornell_ugrad'] : NULL;
 $msg = array("Basic Information", "Education", "Major", "College", "Major");
 $currpage_msg = 'Part ' . $submitno . ': ' . $msg[$submitno - 1];
 // $nextpage_msg = '"' . 'Part ' . $nextpage . ': ' . $msg[$submitno] . '"';
@@ -60,6 +61,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	if (isset($_SESSION['cornell_grad'])) {
 		$cornell_grad = $_SESSION['cornell_grad'];
+	}
+
+	if (isset($_POST['form-college-cornell'])) {
+		$cornell_ugrad = $_POST['form-college-cornell'];
+		$_SESSION['cornell_ugrad'] = $cornell_ugrad;
+	}
+
+	if (isset($_SESSION['cornell_ugrad'])) {
+		$cornell_ugrad = $_SESSION['cornell_ugrad'];
 	}
 
 	// print '<div> ' . $submitno . '</div>';
@@ -175,13 +185,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 				<div class="centerheading"><h4>What College?</h4></div>
 				<select name="form-college-cornell">
-					<option>College of Agriculture and Life Sciences (CALS)</option>
-					<option>College of Architecture, Art, and Planning (AAP)</option>
-					<option>College of Arts and Sciences (AS)</option>
-					<option>College of Engineering (ENG)</option>
-					<option>School of Hotel Administration (SHA)</option>
-					<option>College of Human Ecology (HumEc)</option>
-					<option>School of Industrial and Labor Relations (ILR)</option>
+					<option value="0">College of Agriculture and Life Sciences (CALS)</option>
+					<option value="1">College of Architecture, Art, and Planning (AAP)</option>
+					<option value="2">College of Arts and Sciences (AS)</option>
+					<option value="3">College of Engineering (ENG)</option>
+					<option value="4">School of Hotel Administration (SHA)</option>
+					<option value="5">College of Human Ecology (HumEc)</option>
+					<option value="6">School of Industrial and Labor Relations (ILR)</option>
 				</select>
 
 				<?php else: ?>
@@ -231,10 +241,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 			<?php elseif ($submitno == 3): ?>
-				<?php if ($cornell === FALSE && $undergrad === FALSE): ?>
-
-				
-				<?php elseif ($cornell === TRUE && $undergrad === FALSE && $cornell_grad == '0'): ?>
+							
+				<?php if ($cornell === TRUE && $undergrad === FALSE && $cornell_grad == '0'): ?>
 				<div class="centerheading"><h4>What Field of Study at Cornell Tech?</h4></div>
 				<select name="form-tech" id="form-tech">
 					<option>MEng in Computer Science</option>

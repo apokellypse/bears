@@ -457,12 +457,15 @@ $(window).load(function () {
     $('section#front-page-top > div.row').hide();
     $('section#front-page-top > div.row').fadeIn(2000);
 
+
+// the following ajax doesn't work and is sad
     var myselect = 'select[name=' + '"form-college-cornell"]';
     $(myselect).click(function() {
         // if (error === 0) {
             console.log('detected click in college selection');
             var option = $(this).val(); // grabs option value
-            var dataString = 'cornell_grad=' + option;
+            // var dataString = 'ajaxform=' + option;
+            var dataString = {ajaxform : option};
             jQuery.ajax({
                 type: "POST",
                 url: "join.php",
@@ -475,6 +478,10 @@ $(window).load(function () {
             });
             return false;
         // }
-    })
+    });
+
+    // $('select[name="form-college-cornell"] option').click(function() {
+    //     console.log('option clicked');
+    // })
 
 });
