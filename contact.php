@@ -27,28 +27,7 @@
 			</div>
 		</div>
   	
-  	<nav class="nav-transparent overlay-nav sticky-nav">
-  	
-  		<div class="row">
-  			<div class="medium-3 columns">
-  				<a class="bears-logo-text" href="index.html">BEARS</a>
-  			</div>
-  			
-  			<div class="medium-9 columns text-right">
-  				<ul class="menu">
-  					<li><a href="index.html">Home</a></li>
-  					<li><a href="about-us.html">About Us</a></li>
-  					<!-- <li><a href="https://cornell.qualtrics.com/SE/?SID=SV_cIT8rVXLtnTyG5n">Join</a></li> -->
-  					<li><a href="members.php">Members</a></li>
-  					<li><a href="faq.html">FAQ</a></li>
-  					<li><a href="contact.html">Contact</a></li>
-  				</ul>
-  			</div>
-  		</div>
-  		
-  		<div class="mobile-toggle"><i class="icon icon_menu"></i></div>
-  	
-  	</nav><!--end of navigation-->
+	<?php include 'nav.php';?>
   	
   	<header class="divider-background">
 		<div class="overlay background-dark-grey"></div>

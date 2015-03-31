@@ -27,28 +27,7 @@
 			</div>
 		</div>
   	
-  	<nav class="nav-transparent overlay-nav sticky-nav">
-  	
-  		<div class="row">
-  			<div class="medium-3 columns">
-  				<a class="bears-logo-text" href="index.html">BEARS</a>
-  			</div>
-  			
-  			<div class="medium-9 columns text-right">
-  				<ul class="menu">
-  					<li><a href="index.html">Home</a></li>
-  					<li><a href="about-us.html">About Us</a></li>
-  					<!-- <li><a href="https://cornell.qualtrics.com/SE/?SID=SV_cIT8rVXLtnTyG5n">Join</a></li> -->
-  					<li><a href="members.php">Members</a></li>
-  					<li><a href="faq.html">FAQ</a></li>
-  					<li><a href="contact.html">Contact</a></li>
-  				</ul>
-  			</div>
-  		</div>
-  		
-  		<div class="mobile-toggle"><i class="icon icon_menu"></i></div>
-  	
-  	</nav><!--end of navigation-->
+	<?php include 'nav.php';?>
     
 	<section style="display:none" class="hero-slider slider-fullscreen">
 		<!-- <img alt="Slider Background" class="background-image" src="img/logo2.png" /> -->
@@ -215,26 +194,30 @@
 	</section><!--end of small portfolio-->
 
 
-	<section id="front-page-top"><!--begin home features-->
+	<section id="front-page-top">
 	</section>
 
-	<section>
+	<section id="front-page-top2">
+		<div class="row">
+			<!-- <h3 class="headtitle">Welcome to Cornell BEARS!</h3> -->
+			<div class="headquote">Mentorship tailored to You.</div>
+		</div>
+	</section>
+
+	<section><!--begin home features-->
 	
 		<div class="row">
 
 			<h3 class="headtitle">Why Join BEARS?</h3>
 			<div class="headquote">It’s Hard to Improve When You Have No One But Yourself to Follow</div>
-<!-- 
-			<div class="medium-3 columns text-center">
-				<p style="visibility:hidden">placeholder</p>
-			</div> -->
-			<div class="medium-3 medium-a columns text-center">
+			
+			<div class="medium-6 columns text-center">
 				<div class="icon-box">
 					<i class="icon icon-compass"></i>
 				</div>
 				<h6>For the Mentor</h6>
 				<div class="horizontal-line"></div>
-				<p style="text-align: left;">
+				<p style="text-align: left; margin-left: 150px; color: black;">
 					• Provide constructive and honest feedback <br>
 
 					• Create safe environment for inquiries <br>
@@ -257,29 +240,29 @@
 
 					• Offer encouragement <br>
 
-					<!-- • Endorse exploration of ideas<br> -->
+					• Endorse exploration of ideas<br>
 
-					<!-- • Career guidance based on past professional experience<br> -->
+					• Career guidance based on past professional experience<br>
 
-					<!-- • Help with identifying issues &amp; trends in field <br> -->
+					• Help with identifying issues &amp; trends in field <br>
 
 					• Share successes and mistakes<br>
 
-					<!-- • Introduce mentee to professionals<br> -->
+					• Introduce mentee to professionals<br>
 
 					• Maintain open communication <br>
 
-					<!-- • Respect . . . Confidentiality -->
+					• Respect . . . Confidentiality
 				</p>
 			</div>
 			
-			<div class="medium-3 medium-a columns text-center">
+			<div class="medium-6 columns text-center">
 				<div class="icon-box">
 					<i class="icon icon_star_alt"></i>
 				</div>
 				<h6>For the Mentee</h6>
 				<div class="horizontal-line"></div>
-				<p style="text-align: left;">
+				<p style="text-align: left; margin-left: 150px; color: black;">
 					• Listen to and consider feedback<br>
 
 					• Seek growth opportunities <br>
@@ -296,7 +279,7 @@
 
 					• Be open-minded<br>
 
-					<!-- • Be considerate of mentor’s time<br> -->
+					• Be considerate of mentor’s time<br>
 
 					• Maintain open communication<br>
 
@@ -307,8 +290,6 @@
 					• Ask questions<br>
 				</p>
 			</div>
-			<!-- <div class="medium-3 columns text-center"></div> -->
-			
 
 		<!-- 	<div class="medium-12 columns text-center">
 				<a href="https://www.youtube.com/watch?v=2cITAqq49sU" class="button button-small button-black button-filled">Watch Video! <i class="icon icon_star"></i></a>

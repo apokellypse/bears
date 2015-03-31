@@ -313,43 +313,43 @@ $(document).ready(function () {
 
     /************** Contact Form Scripts **************/
 
-    jQuery('.form-contact .button').click(function () {
+    // jQuery('.form-contact .button').click(function () {
 
-        event.preventDefault(); // cancel default behavior
+    //     event.preventDefault(); // cancel default behavior
 
-        var name = jQuery('#form-name').val();
-        var email = jQuery('#form-email').val();
-        var message = jQuery('#form-msg').val();
-        var error = 0;
+    //     var name = jQuery('#form-name').val();
+    //     var email = jQuery('#form-email').val();
+    //     var message = jQuery('#form-msg').val();
+    //     var error = 0;
 
-        if (name === '' || email === '' || message === '') {
-            error = 1;
-            jQuery('#details-error').fadeIn(200);
-        } else {
-            jQuery('#details-error').fadeOut(200);
-        }
+    //     if (name === '' || email === '' || message === '') {
+    //         error = 1;
+    //         jQuery('#details-error').fadeIn(200);
+    //     } else {
+    //         jQuery('#details-error').fadeOut(200);
+    //     }
 
-        if (!(/(.+)@(.+){2,}\.(.+){2,}/.test(email))) {
-            jQuery('#details-error').fadeIn(200);
-            error = 1;
-        }
+    //     if (!(/(.+)@(.+){2,}\.(.+){2,}/.test(email))) {
+    //         jQuery('#details-error').fadeIn(200);
+    //         error = 1;
+    //     }
 
-        var dataString = 'name=' + name + '&email=' + email + '&text=' + message;
+        // var dataString = 'name=' + name + '&email=' + email + '&text=' + message;
+// 
+    //     if (error === 0) {
+    //         jQuery.ajax({
+    //             type: "POST",
+    //             url: "mail.php",
+    //             data: dataString,
+    //             success: function () {
+    //                 jQuery('#details-error').fadeOut(1000);
+    //                 jQuery('#form-sent').fadeIn(1000);
+    //             }
+    //         });
+    //         return false;
+    //     }
 
-        if (error === 0) {
-            jQuery.ajax({
-                type: "POST",
-                url: "mail.php",
-                data: dataString,
-                success: function () {
-                    jQuery('#details-error').fadeOut(1000);
-                    jQuery('#form-sent').fadeIn(1000);
-                }
-            });
-            return false;
-        }
-
-    });
+    // });
 
 });
 
@@ -365,9 +365,9 @@ $(window).load(function () {
             $('.animate').each(function () {
                 $(this).addClass('animated fadeInUp');
             });
-        }, 500);
+        }, 250); // KY changed from 500 to 250
 
-    }, 1000);
+    }, 500); // KY changed from 1000 to 500
 
     /************** Navigation Scripts **************/
 
@@ -456,5 +456,25 @@ $(window).load(function () {
 
     $('section#front-page-top > div.row').hide();
     $('section#front-page-top > div.row').fadeIn(2000);
+
+    var myselect = 'select[name=' + '"form-college-cornell"]';
+    $(myselect).click(function() {
+        // if (error === 0) {
+            console.log('detected click in college selection');
+            var option = $(this).val(); // grabs option value
+            var dataString = 'cornell_grad=' + option;
+            jQuery.ajax({
+                type: "POST",
+                url: "join.php",
+                data: dataString,
+                success: function () {
+                    // jQuery('#details-error').fadeOut(1000);
+                    // jQuery('#form-sent').fadeIn(1000);
+                    console.log('success');
+                }
+            });
+            return false;
+        // }
+    })
 
 });
