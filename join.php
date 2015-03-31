@@ -2,42 +2,49 @@
 
 session_start(); //keeps track of user data in the form
 
+// form titles
+$msg = array("Basic Information", "Education", "Major", "More About You", "Professional Interests");
+
 $submitno = 1; // start on page 1
 $nextpage = $submitno + 1;
 $prevpage = max($submitno - 1, 1);
+
+// variables to track who the person is
 $undergrad = isset($_SESSION['undergrad']) ? $_SESSION['undergrad'] : NULL;
 $cornell = isset($_SESSION['cornell']) ? $_SESSION['cornell'] : NULL;
 $cornell_grad = isset($_SESSION['cornell_grad']) ? $_SESSION['cornell_grad'] : NULL;
 $cornell_ugrad = isset($_SESSION['cornell_ugrad']) ? $_SESSION['cornell_ugrad'] : NULL;
-$msg = array("Basic Information", "Education", "Major", "College", "Major");
+
+// displayed on prev/next buttons
 $currpage_msg = 'Part ' . $submitno . ': ' . $msg[$submitno - 1];
-// $nextpage_msg = '"' . 'Part ' . $nextpage . ': ' . $msg[$submitno] . '"';
-$nextpage_msg = '"' . 'Part ' . $nextpage . '"';
-// $prevpage_msg = '"' . 'Part ' . $prevpage . ': ' . $msg[$submitno - 1] . '"';
-$prevpage_msg = '"' . 'Back to Part ' . $prevpage . '"';
+$nextpage_msg = ($nextpage == 6) ? 'Submit' : '"' . 'Part ' . $nextpage . '"';
+$prevpage_msg = ($prevpage == 1 && $nextpage != 3) ?  '"" style="visibility:hidden"' : '"' . 'Back to Part ' . $prevpage . '"';
 
 
 
-if ($undergrad) print 'pageload: is an undergrad';
-if (!($undergrad)) print 'pageload: is grad';
-if ($cornell) print 'pageload: is at cornell';
-if (!($cornell)) print 'pageload: is elsewhere';
+
+// if ($undergrad) print 'pageload: is an undergrad';
+// if (!($undergrad)) print 'pageload: is grad';
+// if ($cornell) print 'pageload: is at cornell';
+// if (!($cornell)) print 'pageload: is elsewhere';
 
 // if the user tries to access another page, or if the user submits
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$submit = $_POST['submit'];
 
-	$submitno = max((int)substr($submit, 5, 1), 1);
-	print $submitno;
+	// extract the number X from the string "Back to Part X" or "Part X"
+	$submitno = (strlen($submit) > 6) ? max((int)substr($submit, 13, 1), 1) : max((int)substr($submit, 5, 1), 1);
+
+	// print $submitno;
 	$nextpage = $submitno + 1;
 	$prevpage = max($submitno - 1, 1);
 	$currpage_msg = 'Part ' . $submitno . ': ' . $msg[$submitno - 1];
-	$nextpage_msg = '"' . 'Part ' . $nextpage . '"';
-	$prevpage_msg = '"' . 'Back to Part ' . $prevpage . '"';
+	$nextpage_msg = ($nextpage == 6) ? 'Submit' : '"' . 'Part ' . $nextpage . '"';
+	$prevpage_msg = ($prevpage == 1 && $nextpage != 3) ?  '"" style="visibility:hidden"' : '"' . 'Back to Part ' . $prevpage . '"';
 
 	if (isset($_POST['form-student-level'])) {
 		$undergrad = ($_POST['form-student-level'] == 'Undergraduate') ? TRUE : FALSE;
-		print $_POST['form-student-level'];
+		// print $_POST['form-student-level'];
 		$_SESSION['undergrad'] = $undergrad;
 	}
 
@@ -70,6 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	if (isset($_SESSION['cornell_ugrad'])) {
 		$cornell_ugrad = $_SESSION['cornell_ugrad'];
+	}
+
+	if ($submit == 'Submit') {
+		print 'form submitted';	
 	}
 
 	// print '<div> ' . $submitno . '</div>';
@@ -217,8 +228,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					<option value="PhD">PhD</option>
 				</select>
 
-				<div class="centerheading"><h4>What Cornell Graduate School are You Part Of?</h4></div>
-				<select name="form-college-cornell-grad">
+				<label for="form-cornell-grad-school">What Cornell Graduate School are You Part Of?</label>
+				<select name="form-college-cornell-grad" id="form-cornell-grad-school">
 					<option value="0">Cornell Tech</option>
 					<option value="1">Cornell Law School</option>
 					<option value="2">Samuel Curtis Johnson Graduate School of Management</option>
@@ -241,8 +252,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 			<?php elseif ($submitno == 3): ?>
-							
-				<?php if ($cornell === TRUE && $undergrad === FALSE && $cornell_grad == '0'): ?>
+
+				<?php if ($undergrad === FALSE && $cornell_grad == '0'): ?>
 				<div class="centerheading"><h4>What Field of Study at Cornell Tech?</h4></div>
 				<select name="form-tech" id="form-tech">
 					<option>MEng in Computer Science</option>
@@ -254,7 +265,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					<option>PhD Information Science</option>
 				</select>
 
-				<?php elseif ($cornell === TRUE && $undergrad === FALSE && $cornell_grad == '1'): ?>
+				<?php elseif ($undergrad === FALSE && $cornell_grad == '1'): ?>
 				<div class="centerheading"><h4>What Field of Study at Cornell Law School?</h4></div>
 				<select name="form-law" id="form-law">
 					<option>Juris Doctor (JD)</option>
@@ -268,7 +279,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					<option>Other (Specify)</option>
 				</select>
 
-				<?php elseif ($cornell === TRUE && $undergrad === FALSE && $cornell_grad == '2'): ?>
+				<?php elseif ($undergrad === FALSE && $cornell_grad == '2'): ?>
 				<div class="centerheading"><h4>What Field of Study at the Johnson?</h4></div>
 				<select name="form-role" id="form-role">
 					<option>MBA</option>
@@ -281,13 +292,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					<option>PhD (Specify)</option>
 				</select>
 
-				<?php elseif ($cornell === TRUE && $undergrad === FALSE && $cornell_grad == '3'): ?>
+				<?php elseif ($undergrad === FALSE && $cornell_grad == '3'): ?>
 				<div class="centerheading"><h4>What Field of Study at the Vet School?</h4></div>
 				<select>
 					<option>The Biological and Biomedical Sciences (BBS) Graduate Program</option>
 				</select>
 
-				<?php elseif ($cornell === TRUE && $undergrad === FALSE && $cornell_grad == '4'): ?>
+				<?php elseif ($undergrad === FALSE && $cornell_grad == '4'): ?>
 				<div class="centerheading"><h4>What Field of Study at Weill Cornell Medical College?</h4></div>
 				<select name="form-role" id="form-role">
 					<option>Tri-Institutional MD-PhD Program</option>
@@ -299,13 +310,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					<option>Humanism in Medicine</option>
 				</select>
 
-				<?php elseif ($cornell === TRUE && $undergrad === FALSE && $cornell_grad == '5'): ?>
+				<?php elseif ($undergrad === FALSE && $cornell_grad == '5'): ?>
 				<div class="centerheading"><h4>What Field of Study at Cornell?</h4></div>
 				<select>
 					<?php include 'graduatelist.php';?>
 				</select>
 
-				<?php else: ?>
+				
+				<?php elseif ($undergrad === TRUE && $cornell_ugrad == '0'): ?>
+				<div class="centerheading"><h4>What Major in CALS?</h4></div>
 				<select>
 					<option>Agricultural Sciences</option>
 					<option>Animal Science</option>
@@ -333,6 +346,103 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					<option>Viticulture and Enology</option>
 				</select>
 
+				<?php elseif ($undergrad === TRUE && $cornell_ugrad == '1'): ?>
+				<div class="centerheading"><h4>What Major in AAP?</h4></div>
+				<select>
+					<option>Architecture</option>
+					<option>Art</option>
+					<option>Urban and Regional Planning</option>
+				</select>
+
+				<?php elseif ($undergrad === TRUE && $cornell_ugrad == '2'): ?>
+				<div class="centerheading"><h4>What Major in A&amp;S?</h4></div>
+				<select>
+					<option>Africana Studies</option>
+					<option>American Studies</option>
+					<option>Anthropology</option>
+					<option>Archaeology</option>
+					<option>Asian Studies</option>
+					<option>Astronomy</option>
+					<option>Biological Sciences</option>
+					<option>Biology &amp; Society</option>
+					<option>Chemistry and Chemical Biology</option>
+					<option>China and Asia-Pacific Studies</option>
+					<option>Classics</option>
+					<option>Comparative Literature</option>
+					<option>Computer Science</option>
+					<option>Economics</option>
+					<option>English</option>
+					<option>Feminist, Gender, and Sexuality Studies</option>
+					<option>French</option>
+					<option>German Studies</option>
+					<option>Government</option>
+					<option>History</option>
+					<option>History of Art</option>
+					<option>Information Science</option>
+					<option>Italian</option>
+					<option>Linguistics</option>
+					<option>Mathematics</option>
+					<option>Music</option>
+					<option>Near Eastern Studies</option>
+					<option>Performing and Media Arts</option>
+					<option>Philosophy</option>
+					<option>Physics</option>
+					<option>Psychology</option>
+					<option>Religious Studies</option>
+					<option>Science &amp; Technology Studies</option>
+					<option>Science of Earth Systems</option>
+					<option>Sociology</option>
+					<option>Spanish</option>
+					<option>Statistics</option>
+				</select>
+
+				<?php elseif ($undergrad === TRUE && $cornell_ugrad == '3'): ?>
+				<div class="centerheading"><h4>What Major in ENG?</h4></div>
+				<select>
+					<option>Applied and Engineering Physics</option>
+					<option>Biological and Environmental Engineering</option>
+					<option>Biomedical Engineering</option>
+					<option>Chemical and Biomolecular Engineering</option>
+					<option>Civil and Environmental Engineering</option>
+					<option>Computer Science</option>
+					<option>Earth and Atmospheric Sciences</option>
+					<option>Electrical and Computer Engineering</option>
+					<option>Engineering Management</option>
+					<option>Information Science</option>
+					<option>Materials Science and Engineering</option>
+					<option>Sibley School of Mechanical and Aerospace Engineering</option>
+					<option>Operations Research and Information Engineering</option>
+					<option>Systems Engineering</option>
+				</select>
+
+				<?php elseif ($undergrad === TRUE && $cornell_ugrad == '4'): ?>
+				<div class="centerheading"><h4>What Major in the Hotel School?</h4></div>
+				<select>
+					<option>Hotel Administration</option>
+				</select>
+
+				<?php elseif ($undergrad === TRUE && $cornell_ugrad == '5'): ?>
+				<div class="centerheading"><h4>What Major in HuMec?</h4></div>
+				<select>
+					<option>Design and Environmental Analysis</option>
+					<option>Fiber Science and Apparel Design</option>
+					<option>Global and Public Health Sciences</option>
+					<option>Human Biology, Health, and Society</option>
+					<option>Human Development</option>
+					<option>Nutritional Sciences</option>
+					<option>Policy Analysis and Management</option>
+				</select>
+
+				<?php elseif ($undergrad === TRUE && $cornell_ugrad == '6'): ?>
+				<div class="centerheading"><h4>What Major in ILR?</h4></div>
+				<select>
+					<option>Industrial and Labor Relations</option>
+				</select>
+
+
+				<?php else: ?>
+
+
 				<?php endif; ?>
 <!-- 
                        _   _                 ___ 
@@ -343,6 +453,82 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
  \__, |\__,_|\___||___/\__|_|\___/|_| |_|     |_/
     | |                                          
     |_|                                           -->
+    		<?php elseif ($submitno == 4): ?>
+    			<label for="form-gen">
+				<select name="form-gen" id="form-gen">
+					<option>Male</option>
+					<option>Female</option>
+					<option>Other</option>
+				</select>
+
+				<label for="form-eth">Ethnicity</label>
+				<select name="form-eth" id="form-eth">
+					<option>White</option>
+					<option>Middle Eastern</option>
+					<option>Black/African-American</option>
+					<option>Latino/Hispanic</option>
+					<option>East Asian</option>
+					<option>South Asian</option>
+					<option>Pacific Islander</option>
+					<option>Native American</option>
+					<option>Decline To Answer</option>
+				</select>
+
+				<label for="form-rel">Religion</label>
+				<select name="form-rel" id="form-rel">
+					<option>Christian</option>
+					<option>Jewish</option>
+					<option>Muslim</option>
+					<option>Hindu</option>
+					<option>Buddhist</option>
+					<option>Atheist/Agnostic</option>
+					<option>Other</option>
+				</select>
+
+				<label for="form-music">Music</label>
+				<select name="form-music" id="form-rel">
+					<option>Alternative</option>
+					<option>Classical</option>
+					<option>Country</option>
+					<option>EDM</option>
+					<option>Hiphop</option>
+					<option>Jazz</option>
+					<option>Latin</option>
+					<option>Opera</option>
+				</select>
+
+				<label for="form-sports">Sports</label>
+				<select name="form-sports" id="form-sports">
+					<option>Archery</option>
+					<option>Badminton</option>
+					<option>Baseball</option>
+					<option>Basketball</option>
+					<option>Bowling</option>
+					<option>Climbing</option>
+					<option>Cycling</option>
+					<option>Dance</option>
+					<option>Equestrian</option>
+					<option>Fishing</option>
+					<option>Football</option>
+					<option>Golf</option>
+					<option>Gymnastics</option>
+					<option>Lacrosse</option>
+					<option>Martial Arts</option>
+					<option>Wrestling</option>
+					<option>Skating</option>
+					<option>Skiing</option>
+					<option>Soccer</option>
+					<option>Swimming</option>
+					<option>Tennis</option>
+					<option>Track</option>
+					<option>None</option>
+					<option>Other</option>
+				</select>
+
+
+				<label for="hometown">Hometown</label>
+				<input type="text" id="hometown" placeholder="New York, NY">
+
 
 
 <!-- 				
@@ -354,6 +540,100 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
  \__, |\__,_|\___||___/\__|_|\___/|_| |_| \____/ 
     | |                                          
     |_|                                           -->
+
+
+    		<?php elseif ($submitno == 5): ?>
+
+    			<select>
+					<option>Administration</option>
+					<option>Aerospace Engineering</option>
+					<option>Architecture</option>
+					<option>Attorney</option>
+					<option>Broadcasting</option>
+					<option>Chemical Engineering</option>
+					<option>Civil Engineering</option>
+					<option>Clergy</option>
+					<option>Coaching</option>
+					<option>Computer Science</option>
+					<option>Corporate</option>
+					<option>Culinary Arts</option>
+					<option>Design</option>
+					<option>Diet</option>
+					<option>Doctor</option>
+					<option>Electrical Engineering</option>
+					<option>Emergency Care</option>
+					<option>Energy</option>
+					<option>Entrepreneurship</option>
+					<option>Environmental Science</option>
+					<option>Fashion</option>
+					<option>Finance</option>
+					<option>Fine Art</option>
+					<option>Foreign Service</option>
+					<option>Forestry / Wilderness</option>
+					<option>Geography</option>
+					<option>Government / Politics</option>
+					<option>Hotel Management</option>
+					<option>Human Resources</option>
+					<option>Information Science</option>
+					<option>International Trade</option>
+					<option>Journalism</option>
+					<option>Judge</option>
+					<option>Lab Research</option>
+					<option>Language Translation</option>
+					<option>Legal</option>
+					<option>Management Counseling</option>
+					<option>Manufacturing</option>
+					<option>Marketing / Advertising</option>
+					<option>Mechanical Engineering</option>
+					<option>Music</option>
+					<option>Nonprofit</option>
+					<option>Nursing</option>
+					<option>Other</option>
+					<option>Parks / Recreation</option>
+					<option>Performing Arts</option>
+					<option>Pharmacy</option>
+					<option>Photography</option>
+					<option>Product Design</option>
+					<option>Psych / Counseling</option>
+					<option>Public Relations</option>
+					<option>Public Service</option>
+					<option>Publishing</option>
+					<option>Real Estate</option>
+					<option>Research</option>
+					<option>Social Work</option>
+					<option>Sports</option>
+					<option>Statistics / Math</option>
+					<option>Teaching K-12</option>
+					<option>University / College</option>
+					<option>Vet</option>
+    			</select>
+
+    			<?php if ($undergrad === TRUE): ?>
+    			<div class="centerheading"><h4>Interested in Research?</h4></div>
+    			<select>
+    				<option>Yes</option>
+    				<option>No</option>
+    			</select>
+
+
+    			<?php else: ?>
+    			<div class="centerheading"><h4>Are you doing Research?</h4></div>
+    			<select>
+    				<option>Yes</option>
+    				<option>No</option>
+    			</select>
+
+    			<div class="centerheading"><h4>If doing Research, do you want Undergrads involved?</h4></div>
+				<select>
+    				<option>Yes</option>
+    				<option>No</option>
+    			</select>
+
+
+
+    			<?php endif; ?>
+
+
 
 
 <!-- 				<label for="form-degree">What Degree?</label>
@@ -373,12 +653,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-				<p>Your Gender</p>
-				<select name="form-gen" id="form-gen">
-					<option>Male</option>
-					<option>Female</option>
-					<option>Other</option>
-				</select>
+
 
 				<p>Ethnicity</p>
 				<input type="text" placeholder="Hometown">
