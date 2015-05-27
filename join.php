@@ -186,15 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					<option value="Senior">Senior</option>
 				</select>
 
-				<div class="centerheading"><h4>Do you want a Mentor or Mentee?</h4></div>
-				<select>
-					<option>I want a Mentee</option>
-					<option>I want an undergraduate Mentor</option>
-					<option>I want a graduate Mentor</option>
-					<option>I want an undergraduate or graduate Mentor</option>
-				</select>
-
-				<div class="centerheading"><h4>What College?</h4></div>
+				<div class="centerheading"><h4>What College Are You In?</h4></div>
 				<select name="form-college-cornell">
 					<option value="0">College of Agriculture and Life Sciences (CALS)</option>
 					<option value="1">College of Architecture, Art, and Planning (AAP)</option>
@@ -203,6 +195,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					<option value="4">School of Hotel Administration (SHA)</option>
 					<option value="5">College of Human Ecology (HumEc)</option>
 					<option value="6">School of Industrial and Labor Relations (ILR)</option>
+				</select>
+
+				<div class="centerheading"><h4>Do you want a Mentor or Mentee?</h4></div>
+				<select>
+					<option>I want a Mentee</option>
+					<option>I want an undergraduate Mentor</option>
+					<option>I want a graduate Mentor</option>
+					<option>I want an undergraduate or graduate Mentor</option>
 				</select>
 
 				<?php else: ?>
